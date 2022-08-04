@@ -1,11 +1,18 @@
+import 'package:allpartner/Screen/Allpartner/Profile/Widgets/AddTextForm.dart';
+import 'package:allpartner/Screen/Widgets/ButtonRounded.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CardList extends StatelessWidget {
   Map<String, dynamic> list;
   CardList({Key? key, required this.list}) : super(key: key);
+  final GlobalKey<FormState> editFormKey = GlobalKey<FormState>();
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -38,38 +45,6 @@ class CardList extends StatelessWidget {
                     width: 80,
                   ),
                 ),
-                // Container(
-                //   width: 80,
-                //   decoration: BoxDecoration(
-                //     color: Colors.blue,
-                //     borderRadius: BorderRadius.only(
-                //         bottomRight: Radius.circular(10),
-                //         bottomLeft: Radius.circular(10)),
-                //   ),
-                //   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 6),
-                //   child: Column(
-                //     children: [
-                //       Text(list['hh'],
-                //           maxLines: 1,
-                //           style: TextStyle(color: Colors.white, height: 1.4),
-                //           softWrap: false,
-                //           textAlign: TextAlign.center,
-                //           overflow: TextOverflow.fade),
-                //       Text(list['dd'],
-                //           maxLines: 1,
-                //           style: TextStyle(color: Colors.white, height: 1),
-                //           softWrap: false,
-                //           textAlign: TextAlign.center,
-                //           overflow: TextOverflow.fade),
-                //       Text(list['mm'],
-                //           maxLines: 1,
-                //           style: TextStyle(color: Colors.white, height: 1),
-                //           softWrap: false,
-                //           textAlign: TextAlign.center,
-                //           overflow: TextOverflow.fade),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
             SizedBox(width: 12),
@@ -93,8 +68,153 @@ class CardList extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: (){}, 
-                          icon: Icon(Icons.edit)),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (BuildContext context) => SizedBox(
+                                  height: size.height * 0.90,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 221, 218, 218),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 10),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Form(
+                                            key: editFormKey,
+                                            child: Wrap(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                                  child: Text(
+                                                    'หัวข้อ',
+                                                    style: TextStyle(
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                AddTextForm(
+                                                  controller: username,
+                                                  hintText: list['title'],
+                                                ),
+                                                SizedBox(
+                                                  height: size.height * 0.02,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                                  child: Text(
+                                                    'รายละเอียด',
+                                                    style: TextStyle(
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                AddTextForm(
+                                                  controller: username,
+                                                  hintText: list['subtitle'],
+                                                  maxLines: 4,
+                                                ),
+                                                SizedBox(
+                                                  height: size.height * 0.02,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                                  child: Text(
+                                                    'ที่อยู่',
+                                                    style: TextStyle(
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                AddTextForm(
+                                                  controller: username,
+                                                  hintText:list['address'],
+                                                ),
+                                                SizedBox(
+                                                  height: size.height * 0.02,
+                                                ),
+                                                
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 30),
+                                                  child: ButtonRounded(
+                                                    text: 'บันทึก',
+                                                    color: Colors.blue,
+                                                    textColor: Colors.white,
+                                                    onPressed: () {
+                                                      showCupertinoDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            CupertinoAlertDialog(
+                                                          title: Text(
+                                                            'ดำเนินการเรียบร้อย',
+                                                            //style: TextStyle(fontFamily: fontFamily),
+                                                          ),
+                                                          content: Text(
+                                                            'ต้องการออกจากหน้านี้หรือไม่',
+                                                            //style: TextStyle(fontFamily: fontFamily),
+                                                          ),
+                                                          actions: <
+                                                              CupertinoDialogAction>[
+                                                            CupertinoDialogAction(
+                                                              child: Text(
+                                                                'ยกเลิก',
+                                                                // style: TextStyle(
+                                                                //   color: kThemeTextColor,
+                                                                //   fontFamily: fontFamily,
+                                                                //   fontWeight: FontWeight.bold,
+                                                                // ),
+                                                              ),
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context,
+                                                                      true),
+                                                            ),
+                                                            CupertinoDialogAction(
+                                                              child: Text(
+                                                                'ตกลง',
+                                                                // style: TextStyle(
+                                                                //   color: kThemeTextColor,
+                                                                //   fontFamily: fontFamily,
+                                                                // ),
+                                                              ),
+                                                              onPressed: () =>
+                                                                  Navigator.of(
+                                                                      context)
+                                                                    ..pop()
+                                                                    ..pop(),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.edit)),
                         //BookingOptionsPopupMenuWidget(booking: _booking),
                       ],
                     ),
@@ -137,32 +257,7 @@ class CardList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Divider(height: 8, thickness: 0),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Expanded(
-                    //       flex: 1,
-                    //       child: Text(
-                    //         "Total",
-                    //         maxLines: 1,
-                    //         overflow: TextOverflow.fade,
-                    //         softWrap: false,
-                    //         style: TextStyle(fontWeight: FontWeight.w500),
-                    //       ),
-                    //     ),
-                    //     Expanded(
-                    //       flex: 1,
-                    //       child: Align(
-                    //         alignment: AlignmentDirectional.centerEnd,
-                    //         child: Text(
-                    //           list['total'],
-                    //           style: TextStyle(color: Colors.deepOrange),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+                    
                   ],
                 ),
               ),
