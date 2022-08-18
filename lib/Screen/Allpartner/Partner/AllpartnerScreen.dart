@@ -99,7 +99,7 @@ class _AllPartnerScreenState extends State<AllPartnerScreen> {
                             color: Color.fromARGB(255, 17, 95, 81)
                                 .withOpacity(0.1),
                             elevation: 0,
-                            child: Text("View All",
+                            child: Text("ดูเพิ่ม",
                                 style: TextStyle(fontWeight: FontWeight.w600)),
                           ),
                         ],
@@ -121,7 +121,7 @@ class _AllPartnerScreenState extends State<AllPartnerScreen> {
                             shape: StadiumBorder(),
                             color: Colors.greenAccent.withOpacity(0.1),
                             elevation: 0,
-                            child: Text("View All", style: TextStyle(fontWeight: FontWeight.w700)),
+                            child: Text("ดูเพิ่ม", style: TextStyle(fontWeight: FontWeight.w700)),
                           ),
                         ],
                       ),

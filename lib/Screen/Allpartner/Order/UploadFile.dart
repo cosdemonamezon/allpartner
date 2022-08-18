@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UploadFile extends StatefulWidget {
@@ -149,9 +150,46 @@ class _UploadFileState extends State<UploadFile> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                    ..pop()
-                    ..pop();
+                  showCupertinoDialog(
+                              context: context,
+                              builder: (context) => CupertinoAlertDialog(
+                                title: Text(
+                                  'ดำเนินการเรียบร้อย',
+                                  //style: TextStyle(fontFamily: fontFamily),
+                                ),
+                                content: Text(
+                                  'ต้องการออกจากหน้านี้หรือไม่',
+                                  //style: TextStyle(fontFamily: fontFamily),
+                                ),
+                                actions: <CupertinoDialogAction>[
+                                  CupertinoDialogAction(
+                                    child: Text(
+                                      'ยกเลิก',
+                                      // style: TextStyle(
+                                      //   color: kThemeTextColor,
+                                      //   fontFamily: fontFamily,
+                                      //   fontWeight: FontWeight.bold,
+                                      // ),
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: Text(
+                                      'ตกลง',
+                                      // style: TextStyle(
+                                      //   color: kThemeTextColor,
+                                      //   fontFamily: fontFamily,
+                                      // ),
+                                    ),
+                                    onPressed: () => Navigator.of(context)
+                                      ..pop()
+                                      ..pop()
+                                      ..pop(),
+                                  )
+                                ],
+                              ),
+                            );
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),

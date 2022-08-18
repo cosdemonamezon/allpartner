@@ -56,7 +56,7 @@ class _SetPaymentState extends State<SetPayment> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Payment",
+          "ข้อมูลบัตรเครดิต",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.transparent,
