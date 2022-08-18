@@ -153,17 +153,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
-        child: CustomButton(
-          color: Colors.white,
-          borderOnly: true,
-          text: 'ออกจากระบบ',
-          onPressed: () async {
-            //logOut(context);
-          },
-        ),
-      ),
+      
     );
   }
   logOut(context) async {
