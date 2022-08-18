@@ -1,5 +1,6 @@
 
 import 'package:allpartner/Screen/Allpartner/About/AboutScreen.dart';
+import 'package:allpartner/Screen/Allpartner/Order/PurchaseOrder.dart';
 import 'package:allpartner/Screen/Allpartner/Partner/AllpartnerScreen.dart';
 import 'package:allpartner/Screen/Allpartner/Profile/ProfileSettingScreen.dart';
 import 'package:allpartner/Screen/Allpartner/Search/SearchPartnerScreen.dart';
@@ -33,6 +34,7 @@ class _AllPartnerHomeState extends State<AllPartnerHome> {
         children: [
           AllPartnerScreen(),
           SearchPartnerScreen(),
+          PurchaseOrder(),
           AboutScreen(),
           ProfileSettingScreen(),          
         ],
@@ -58,7 +60,14 @@ class _AllPartnerHomeState extends State<AllPartnerHome> {
                     height: size.height * 0.025),
                 activeIcon: Image.asset('assets/icons/navi3_active.png',
                     height: size.height * 0.025),
-                label: 'รายการสินค้า',
+                label: 'สินค้า',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset('assets/icons/navi4.png',
+                    height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi4_active.png',
+                    height: size.height * 0.025),
+                label: 'คำสั่งซื้อ',
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/navi3.png',
