@@ -1,9 +1,15 @@
-
 import 'package:allpartner/Screen/Allpartner/AllpartnerHome.dart';
 import 'package:allpartner/Screen/Login/Widgets/AppTextForm.dart';
 import 'package:allpartner/Screen/Widgets/ButtonRounded.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+
+import '../../constants/constants.dart';
+import '../Widgets/LoadingDialog.dart';
+import '../Widgets/cupertinoAlertDialog.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -31,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final padding = MediaQuery.of(context).padding;
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(),
       //extendBody: true,
       body: SafeArea(
         child: isLoadding == true
@@ -65,9 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: Text(
                               'Email',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                             ),
                           ),
                           AppTextForm(
@@ -78,9 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Text(
                               'Password',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                             ),
                           ),
                           AppTextForm(
@@ -97,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.blue,
                       textColor: Colors.white,
                       onPressed: () {
-                        //login(context);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> AllPartnerHome()));
+                        LoadingDialog.open(context);
+                        signIn(email: email.text, password: password.text);
                       },
                     ),
                     SizedBox(height: 25),
@@ -106,8 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {},
                       child: Text(
                         'ForgotPassword',
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -115,6 +117,57 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
       ),
     );
+  }
+
+  Future<bool?> signIn({
+    required String email,
+    required String password,
+  }) async {
+    final url = Uri.parse('$baseUrl/api/login');
+    final response = await http.post(url, body: {
+      'username': email,
+      'password': password,
+    });
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+
+      final SharedPreferences prefs = await _prefs;
+
+      if (data != null) {
+        await prefs.setString('token', data['token']);
+        await prefs.setString('member_id', data['data']['id'].toString());
+        print(data);
+      }
+
+      LoadingDialog.close(context);
+      showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoQuestion(
+                title: 'การเข้าสู่ระบบ',
+                content: 'ยินดีต้อนรับ เข้าสู่ระบบสำเร็จ',
+                press: () {
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
+                    return AllPartnerHome();
+                  }), (route) => false);
+                },
+              ));
+
+      return true;
+    } else {
+      final error = convert.jsonDecode(response.body);
+
+      LoadingDialog.close(context);
+      showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoQuestion(
+                title: 'การเข้าสู่ระบบไม่สำเร็จ',
+                content: error['message'].toString(),
+                press: () {
+                  Navigator.pop(context, true);
+                },
+              ));
+      return null;
+    }
   }
 
   // void login(context) async {
@@ -125,8 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
   //   final response =
   //       await LoginApi.login(email: email.text, password: password.text);
   //   if (response['status_api']) {
-  //     await prefs.setString('token', response['token']);      
-        
+  //     await prefs.setString('token', response['token']);
+
   //       Future.delayed(Duration(seconds: 3), () {
   //         setState(() {
   //             isLoadding = false;
@@ -144,9 +197,9 @@ class _LoginScreenState extends State<LoginScreen> {
   //             Navigator.pushReplacement(context,
   //                 MaterialPageRoute(builder: (context) => AllPartnerHome()));
   //           }
-          
+
   //       });
-      
+
   //   } else {
   //     print(response);
   //   }

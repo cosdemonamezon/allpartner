@@ -1,9 +1,21 @@
 import 'package:allpartner/Screen/Login/WelcomeScreen.dart';
 import 'package:allpartner/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
+
+import 'Screen/Allpartner/Search/ProductController.dart';
+import 'Screen/app/appController.dart';
 
 void main() {
-  runApp(const MyApp());
+  configLoading();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => AppController()),
+      ChangeNotifierProvider(create: (_) => ProductController()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,8 +43,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'NotoSansThai',
-        textSelectionTheme:
-            TextSelectionThemeData(cursorColor: kThemeTextColor),
+        textSelectionTheme: TextSelectionThemeData(cursorColor: kThemeTextColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: WelcomeScreen(),
@@ -40,3 +51,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
+  // ..customAnimation = CustomAnimation();
+}

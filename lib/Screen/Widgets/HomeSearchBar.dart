@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HomeSearchBar extends StatelessWidget implements PreferredSize {
   const HomeSearchBar({Key? key}) : super(key: key);
   @override
-  Size get preferredSize => Size(50 , 180);
+  Size get preferredSize => Size(50, 180);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class HomeSearchBar extends StatelessWidget implements PreferredSize {
       ),
     );
   }
-  
+
   @override
   // TODO: implement child
   Widget get child => throw UnimplementedError();
