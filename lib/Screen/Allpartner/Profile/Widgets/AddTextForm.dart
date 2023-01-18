@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AddTextForm extends StatefulWidget {
-  AddTextForm({
-    Key? key,
-    this.controller,
-    this.hintText,
-    this.isPassword = false,
-    this.maxLines = 1,
-  }) : super(key: key);
+  AddTextForm({Key? key, this.controller, this.hintText, this.isPassword = false, this.maxLines = 1, this.keyboardType})
+      : super(key: key);
   final TextEditingController? controller;
   final String? hintText;
   final bool isPassword;
   final int maxLines;
+  final TextInputType? keyboardType;
 
   @override
   State<AddTextForm> createState() => _AddTextFormState();
@@ -25,6 +21,7 @@ class _AddTextFormState extends State<AddTextForm> {
       obscureText: widget.isPassword ? _show : false,
       controller: widget.controller,
       maxLines: widget.maxLines,
+      keyboardType: widget.keyboardType ?? TextInputType.text,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(10.0),
         fillColor: Color(0xFFF3F6FA),
@@ -43,9 +40,7 @@ class _AddTextFormState extends State<AddTextForm> {
                     _show = !_show;
                   });
                 },
-                child: _show
-                    ? Image.asset('assets/icons/eye.png')
-                    : Image.asset('assets/icons/eye-slash.png'),
+                child: _show ? Image.asset('assets/icons/eye.png') : Image.asset('assets/icons/eye-slash.png'),
               )
             : null,
       ),

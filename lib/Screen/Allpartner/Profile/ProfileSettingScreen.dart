@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/appController.dart';
+import 'VendorPage.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
   ProfileSettingScreen({Key? key}) : super(key: key);
@@ -131,6 +132,12 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                         SizedBox(height: 10),
                         // Divider(color: Colors.grey),
                         TitleTextWidget(title: 'บัญชีของฉัน', size: size),
+                        ProfileMenu(
+                          title: 'รายละเอียดบริษัท',
+                          image: 'user',
+                          page: VendorPage(),
+                        ),
+                        Divider(color: Colors.grey),
                         ProfileMenu(
                           title: 'จัดการที่อยู่',
                           image: 'mapSetting',

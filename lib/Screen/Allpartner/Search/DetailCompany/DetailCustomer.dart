@@ -1,0 +1,125 @@
+import 'package:allpartner/Screen/Allpartner/Search/Logistic/LogisticPage.dart';
+import 'package:allpartner/Screen/Allpartner/Search/Quotation/QuotationPage.dart';
+import 'package:allpartner/Screen/Allpartner/Search/Scrap/ScrapPage.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../appTheme.dart';
+import '../../../Widgets/SearchTextField.dart';
+import '../ProductController.dart';
+
+class DetailCustomer extends StatefulWidget {
+  const DetailCustomer({super.key, required this.id});
+  final int id;
+
+  @override
+  State<DetailCustomer> createState() => _DetailCustomerState();
+}
+
+class _DetailCustomerState extends State<DetailCustomer> with TickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _loadItem();
+  }
+
+  Future _loadItem() async {
+    await context.read<ProductController>().loadLogisticCompany(id: widget.id);
+    await context.read<ProductController>().loadScrapCompany(id: widget.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final appFontSize = AppFontSize.of(context);
+    final size = MediaQuery.of(context).size;
+    return Consumer<ProductController>(
+      builder: (context, controller, child) => DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              title: Text(
+                'รายละเอียด',
+                //style: TextStyle(color: Colors.deepOrange),
+              ),
+              backgroundColor: Colors.transparent,
+              bottom: TabBar(
+                //isScrollable: true,
+                controller: _tabController,
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey,
+                indicatorColor: Colors.blue,
+                labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
+                tabs: [
+                  Tab(text: 'บริการ'),
+                  Tab(text: 'ใบเสนอราคา'),
+                ],
+              ),
+            ),
+            body: TabBarView(
+              controller: _tabController,
+              children: [
+                // Tap1
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(horizontal: 10),
+                      //   child: SearchTextField(),
+                      // ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return LogisticPage(id: widget.id);
+                          }));
+                        },
+                        child: SizedBox(
+                          child: Text('Logistic'),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return ScrapPage(id: widget.id);
+                          }));
+                        },
+                        child: SizedBox(
+                          child: Text('Scrap'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Tap2
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: SearchTextField(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )),
+      ),
+    );
+  }
+}

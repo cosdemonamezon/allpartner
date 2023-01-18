@@ -10,7 +10,6 @@ class Scraps {
     this.name,
     this.qty,
     this.description,
-    this.image,
     this.status,
   });
 
@@ -19,7 +18,6 @@ class Scraps {
   String? name;
   String? qty;
   String? description;
-  String? image;
   String? status;
 
   factory Scraps.fromJson(Map<String, dynamic> json) => _$ScrapsFromJson(json);

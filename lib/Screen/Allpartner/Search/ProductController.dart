@@ -2,6 +2,7 @@ import 'package:allpartner/Model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Model/company/company.dart';
 import 'ProductServicer.dart';
 
 class ProductController extends ChangeNotifier {
@@ -10,15 +11,58 @@ class ProductController extends ChangeNotifier {
   ProductService productService;
   String? token;
   SharedPreferences? pref;
-  List<User> productCompany = [];
+  // List<User> productCompany = [];
+  List<Company> compayCustomer = [];
+  List<User> logisticCompany = [];
+  List<User> scrapCompany = [];
 
   // ProductCompany
-  Future<void> loadProductCompany({
-    required int Id,
-  }) async {
-    final _loadProduct = await ProductService.getProductCompany(companyId: Id);
-    productCompany = (_loadProduct);
+  // Future<void> loadProductCompany({
+  //   required int Id,
+  // }) async {
+  //   final _loadProduct = await ProductService.getProductCompany(companyId: Id);
+  //   productCompany = (_loadProduct);
 
+  //   notifyListeners();
+  // }
+
+// โหลดรายชื่อบริษัท
+  Future<void> loadLogoCompay() async {
+    compayCustomer.clear();
+    final _loadItem = await ProductService.listCompany();
+
+    // for (var company in _loadItem) {
+    //   final positions = await JobService.getPosition(companyId: company.id!);
+    //   inspect(positions[0].recruitment_companies);
+    //   if (positions[0].recruitment_companies!.isNotEmpty) {
+    //     logoCompay.add(company);
+    //   }
+    // }
+
+    compayCustomer = (_loadItem);
+
+    notifyListeners();
+  }
+
+  //โหลดLogistic ของCustomer
+  Future<void> loadLogisticCompany({
+    required int id,
+  }) async {
+    logisticCompany.clear();
+    final _loadPositionL = await ProductService.getLogisticCustomer(companyId: id);
+    logisticCompany.addAll(_loadPositionL);
+    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
+    notifyListeners();
+  }
+
+  //โหลดScrap ของCustomer
+  Future<void> loadScrapCompany({
+    required int id,
+  }) async {
+    scrapCompany.clear();
+    final _loadPositionS = await ProductService.getScrapCustomer(companyId: id);
+    scrapCompany.addAll(_loadPositionS);
+    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }
 }

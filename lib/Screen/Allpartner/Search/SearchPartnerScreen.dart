@@ -3,7 +3,10 @@ import 'package:allpartner/Screen/Widgets/CardList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../appTheme.dart';
+import '../../Widgets/SearchTextField.dart';
 import '../../app/appController.dart';
+import 'DetailCompany/DetailCustomer.dart';
 import 'ProductController.dart';
 
 class SearchPartnerScreen extends StatefulWidget {
@@ -13,7 +16,8 @@ class SearchPartnerScreen extends StatefulWidget {
   State<SearchPartnerScreen> createState() => _SearchPartnerScreenState();
 }
 
-class _SearchPartnerScreenState extends State<SearchPartnerScreen> {
+class _SearchPartnerScreenState extends State<SearchPartnerScreen> with TickerProviderStateMixin {
+  late TabController _tabController;
   final GlobalKey<FormState> searchFormKey = GlobalKey<FormState>();
   final TextEditingController searchController = TextEditingController();
   List<Map<String, dynamic>> productlist = [
@@ -77,334 +81,219 @@ class _SearchPartnerScreenState extends State<SearchPartnerScreen> {
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
     _loadItem();
   }
 
   Future _loadItem() async {
     final userId = await context.read<AppController>().user!.id;
-    print(userId);
-    await context.read<ProductController>().loadProductCompany(Id: userId!);
+    // await context.read<ProductController>().loadProductCompany(Id: userId!);
+    await context.read<ProductController>().loadLogoCompay();
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final appFontSize = AppFontSize.of(context);
     return Consumer<ProductController>(
-      builder: (context, controller, child) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'รายการสินค้า',
-            //style: TextStyle(color: Colors.deepOrange),
-          ),
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
-          //   onPressed: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
-        ),
-        body: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            // physics: NeverScrollableScrollPhysics(),
-            itemCount: controller.productCompany.length,
-            itemBuilder: (_, index) {
-              return controller.productCompany.isNotEmpty
-                  ? SizedBox.shrink()
-                  : GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: Offset(0, 5)),
-                            ],
-                            borderRadius:
-                                BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                                  child: controller.productCompany[0].scraps!.isNotEmpty &&
-                                          controller.productCompany[0].scraps![index].image! != null
-                                      ? Image.network(
-                                          controller.productCompany[0].scraps![index].image!,
-                                          fit: BoxFit.fill,
-                                          height: 100,
-                                          width: 80,
-                                        )
-                                      // : SizedBox.shrink()
-                                      : Image.asset(
-                                          "assets/images/No_Image_Available.jpg",
-                                          fit: BoxFit.fill,
-                                          height: 100,
-                                          width: 80,
-                                        ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: Opacity(
-                                opacity: 1,
-                                child: Wrap(
-                                  runSpacing: 2,
-                                  alignment: WrapAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: controller.productCompany[0].scraps!.isNotEmpty
-                                                ? Text(
-                                                    controller.productCompany[0].scraps![index].name!,
-                                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                    maxLines: 3,
-                                                    // textAlign: TextAlign.end,
-                                                  )
-                                                : Text(
-                                                    '',
-                                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                    maxLines: 3,
-                                                    // textAlign: TextAlign.end,
-                                                  )),
-                                        // IconButton(
-                                        //     onPressed: () {
-                                        //       showModalBottomSheet(
-                                        //         context: context,
-                                        //         isScrollControlled: true,
-                                        //         builder: (BuildContext context) => SizedBox(
-                                        //           height: size.height * 0.90,
-                                        //           child: DecoratedBox(
-                                        //             decoration: BoxDecoration(
-                                        //               color: Color.fromARGB(255, 221, 218, 218),
-                                        //             ),
-                                        //             child: Padding(
-                                        //               padding: EdgeInsets.symmetric(
-                                        //                   horizontal: 10, vertical: 10),
-                                        //               child: Column(
-                                        //                 mainAxisSize: MainAxisSize.min,
-                                        //                 mainAxisAlignment:
-                                        //                     MainAxisAlignment.start,
-                                        //                 crossAxisAlignment:
-                                        //                     CrossAxisAlignment.start,
-                                        //                 children: [
-                                        //                   Form(
-                                        //                     key: editFormKey,
-                                        //                     child: Wrap(
-                                        //                       children: [
-                                        //                         Padding(
-                                        //                           padding: EdgeInsets.symmetric(
-                                        //                               vertical: 10),
-                                        //                           child: Text(
-                                        //                             'หัวข้อ',
-                                        //                             style: TextStyle(
-                                        //                                 color: Colors.blue,
-                                        //                                 fontWeight:
-                                        //                                     FontWeight.bold),
-                                        //                           ),
-                                        //                         ),
-                                        //                         AddTextForm(
-                                        //                           controller: username,
-                                        //                           hintText: list['title'],
-                                        //                         ),
-                                        //                         SizedBox(
-                                        //                           height: size.height * 0.02,
-                                        //                         ),
-                                        //                         Padding(
-                                        //                           padding: EdgeInsets.symmetric(
-                                        //                               vertical: 10),
-                                        //                           child: Text(
-                                        //                             'รายละเอียด',
-                                        //                             style: TextStyle(
-                                        //                                 color: Colors.blue,
-                                        //                                 fontWeight:
-                                        //                                     FontWeight.bold),
-                                        //                           ),
-                                        //                         ),
-                                        //                         AddTextForm(
-                                        //                           controller: username,
-                                        //                           hintText: list['subtitle'],
-                                        //                           maxLines: 4,
-                                        //                         ),
-                                        //                         SizedBox(
-                                        //                           height: size.height * 0.02,
-                                        //                         ),
-                                        //                         Padding(
-                                        //                           padding: EdgeInsets.symmetric(
-                                        //                               vertical: 10),
-                                        //                           child: Text(
-                                        //                             'ที่อยู่',
-                                        //                             style: TextStyle(
-                                        //                                 color: Colors.blue,
-                                        //                                 fontWeight:
-                                        //                                     FontWeight.bold),
-                                        //                           ),
-                                        //                         ),
-                                        //                         AddTextForm(
-                                        //                           controller: username,
-                                        //                           hintText:list['address'],
-                                        //                         ),
-                                        //                         SizedBox(
-                                        //                           height: size.height * 0.02,
-                                        //                         ),
-                                        //                         Padding(
-                                        //                           padding: EdgeInsets.symmetric(
-                                        //                               vertical: 30),
-                                        //                           child: ButtonRounded(
-                                        //                             text: 'บันทึก',
-                                        //                             color: Colors.blue,
-                                        //                             textColor: Colors.white,
-                                        //                             onPressed: () {
-                                        //                               showCupertinoDialog(
-                                        //                                 context: context,
-                                        //                                 builder: (context) =>
-                                        //                                     CupertinoAlertDialog(
-                                        //                                   title: Text(
-                                        //                                     'ดำเนินการเรียบร้อย',
-                                        //                                     //style: TextStyle(fontFamily: fontFamily),
-                                        //                                   ),
-                                        //                                   content: Text(
-                                        //                                     'ต้องการออกจากหน้านี้หรือไม่',
-                                        //                                     //style: TextStyle(fontFamily: fontFamily),
-                                        //                                   ),
-                                        //                                   actions: <
-                                        //                                       CupertinoDialogAction>[
-                                        //                                     CupertinoDialogAction(
-                                        //                                       child: Text(
-                                        //                                         'ยกเลิก',
-                                        //                                         // style: TextStyle(
-                                        //                                         //   color: kThemeTextColor,
-                                        //                                         //   fontFamily: fontFamily,
-                                        //                                         //   fontWeight: FontWeight.bold,
-                                        //                                         // ),
-                                        //                                       ),
-                                        //                                       onPressed: () =>
-                                        //                                           Navigator.pop(
-                                        //                                               context,
-                                        //                                               true),
-                                        //                                     ),
-                                        //                                     CupertinoDialogAction(
-                                        //                                       child: Text(
-                                        //                                         'ตกลง',
-                                        //                                         // style: TextStyle(
-                                        //                                         //   color: kThemeTextColor,
-                                        //                                         //   fontFamily: fontFamily,
-                                        //                                         // ),
-                                        //                                       ),
-                                        //                                       onPressed: () =>
-                                        //                                           Navigator.of(
-                                        //                                               context)
-                                        //                                             ..pop()
-                                        //                                             ..pop(),
-                                        //                                     )
-                                        //                                   ],
-                                        //                                 ),
-                                        //                               );
-                                        //                             },
-                                        //                           ),
-                                        //                         ),
-                                        //                       ],
-                                        //                     ),
-                                        //                   ),
-                                        //                 ],
-                                        //               ),
-                                        //             ),
-                                        //           ),
-                                        //         ),
-                                        //       );
-                                        //     },
-                                        //     icon: Icon(Icons.edit)),
-                                        //BookingOptionsPopupMenuWidget(booking: _booking),
-                                      ],
-                                    ),
-                                    Divider(height: 8, thickness: 0),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.build_circle_outlined,
-                                          size: 18,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Flexible(
-                                            child: controller.productCompany[0].scraps!.isNotEmpty
-                                                ? Text(
-                                                    controller.productCompany[0].scraps![index].description!,
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.fade,
-                                                    softWrap: false,
-                                                    style: TextStyle(fontWeight: FontWeight.w500),
-                                                  )
-                                                : Text(
-                                                    '',
-                                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                    maxLines: 3,
-                                                    // textAlign: TextAlign.end,
-                                                  )),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.place_outlined,
-                                          size: 18,
-                                          color: Colors.grey,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Flexible(
-                                            child: controller.productCompany[0].scraps!.isNotEmpty
-                                                ? Text(
-                                                    'จำนวน ${controller.productCompany[0].scraps![index].qty} ',
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.fade,
-                                                    softWrap: false,
-                                                    style: TextStyle(fontWeight: FontWeight.w500),
-                                                  )
-                                                : Text(
-                                                    'จำนวน',
-                                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                    maxLines: 3,
-                                                    // textAlign: TextAlign.end,
-                                                  )),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-            }
-            // children: [
-            //   // buildSearchBar(),
-            //   ListView(
-            //     scrollDirection: Axis.vertical,
-            //     shrinkWrap: true,
-            //     physics: const NeverScrollableScrollPhysics(),
-            //     children: productlist
-            //         .map((e) => CardList(
-            //               list: e,
-            //             ))
-            //         .toList(),
-            //   ),
-            //   //CardList(list: productlist),
-            // ],
+      builder: (context, controller, child) => DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'รายการสินค้า',
+              //style: TextStyle(color: Colors.deepOrange),
             ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AddProductPartner()));
-          },
-          backgroundColor: Colors.blue,
-          child: const Icon(Icons.add),
+            backgroundColor: Colors.transparent,
+            automaticallyImplyLeading: false,
+            bottom: TabBar(
+              //isScrollable: true,
+              controller: _tabController,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Colors.blue,
+              labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
+              tabs: [
+                Tab(text: 'รายชื่อบริษัท'),
+                Tab(text: 'สินค้า'),
+              ],
+            ),
+            // leading: IconButton(
+            //   icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
+          ),
+          // body:
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: SearchTextField(),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      child: controller.compayCustomer.isEmpty
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView.builder(
+                              // controller: _controller,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: controller.compayCustomer.length,
+                              itemBuilder: (_, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => DetailCustomer(
+                                                    id: controller.compayCustomer[index].id!,
+                                                    // name: controller.compayCustomer[index].name!,
+                                                    // email: controller.compayCustomer[index].email!,
+                                                    // image: controller.compayCustomer[index].image!,
+                                                    // phone: controller.compayCustomer[index].phone!,
+                                                  )));
+                                    },
+                                    child: Container(
+                                      width: size.width,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage('assets/images/promotionBG.png'),
+                                          fit: BoxFit.fill,
+                                        ),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              offset: Offset(0, 2),
+                                              color: Color.fromRGBO(0, 78, 179, 0.05),
+                                              blurRadius: 10)
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                flex: 2,
+                                                child: Image.network(
+                                                  "${controller.compayCustomer[index].image}",
+                                                  height: size.height / 17,
+                                                  errorBuilder: (context, error, stackTrace) =>
+                                                      Image.asset('assets/images/No_Image_Available.jpg'),
+                                                )
+                                                // : Image.asset(
+                                                //     'assets/images/No_Image_Available.jpg'),
+                                                ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              flex: 8,
+                                              child: Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      controller.compayCustomer[index].name ?? '',
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    Text(
+                                                      'เบอร์โทรศัพท์ ${controller.compayCustomer[index].phone ?? ''}',
+                                                      style: TextStyle(fontSize: appFontSize?.body2),
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                    SizedBox(height: 4),
+                                                    Text(
+                                                      'อีเมลล์ ${controller.compayCustomer[index].email ?? ''} ',
+                                                      style: TextStyle(fontSize: appFontSize?.body2),
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                    SizedBox(height: 4),
+                                                    // Text(
+                                                    //   'ลักษณะงาน ${controller.compayCustomer[index].type ?? ''}',
+                                                    //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                    //   // overflow: TextOverflow.ellipsis,
+                                                    // ),
+                                                    // SizedBox(height: 4),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                    ),
+                    // ListView(
+                    //   scrollDirection: Axis.vertical,
+                    //   shrinkWrap: true,
+                    //   physics: const NeverScrollableScrollPhysics(),
+                    //   children: companydata
+                    //       .map((data) => CompaniesList(
+                    //             companydata: data,
+                    //             use: true,
+                    //             press: () {
+                    //               Navigator.push(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    //                       builder: (context) => JobCompanyScreen()));
+                    //             },
+                    //           ))
+                    //       .toList(),
+                    // )
+                  ],
+                ),
+              ),
+              //Tap2
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // buildSearchBar(),
+                    ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: productlist
+                          .map((e) => CardList(
+                                list: e,
+                              ))
+                          .toList(),
+                    ),
+                    // CardList(list: productlist),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AddProductPartner()));
+            },
+            backgroundColor: Colors.blue,
+            child: const Icon(Icons.add),
+          ),
         ),
       ),
     );

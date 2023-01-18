@@ -1,13 +1,10 @@
-import 'package:allpartner/Model/scraps.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'logistic.dart';
-
-part 'user.g.dart';
+part 'company.g.dart';
 
 @JsonSerializable()
-class User {
-  User({
+class Company {
+  Company({
     this.id,
     this.permission_id,
     this.username,
@@ -18,8 +15,7 @@ class User {
     this.image,
     this.status,
     this.type,
-    this.scraps,
-    this.logistics,
+    this.No,
   });
 
   int? id;
@@ -32,10 +28,9 @@ class User {
   String? image;
   String? status;
   String? type;
-  List<Scraps>? scraps;
-  List<Logistic>? logistics;
+  int? No;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory Company.fromJson(Map<String, dynamic> json) => _$CompanyFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$CompanyToJson(this);
 }

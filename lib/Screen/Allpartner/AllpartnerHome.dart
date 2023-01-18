@@ -1,4 +1,3 @@
-
 import 'package:allpartner/Screen/Allpartner/About/AboutScreen.dart';
 import 'package:allpartner/Screen/Allpartner/Order/PurchaseOrder.dart';
 import 'package:allpartner/Screen/Allpartner/Partner/AllpartnerScreen.dart';
@@ -36,7 +35,7 @@ class _AllPartnerHomeState extends State<AllPartnerHome> {
           SearchPartnerScreen(),
           PurchaseOrder(),
           AboutScreen(),
-          ProfileSettingScreen(),          
+          ProfileSettingScreen(),
         ],
       ),
       bottomNavigationBar: ClipRRect(
@@ -49,39 +48,29 @@ class _AllPartnerHomeState extends State<AllPartnerHome> {
           child: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/navi1.png',
-                    height: size.height * 0.025),
-                activeIcon: Image.asset('assets/icons/navi1_active.png',
-                    height: size.height * 0.025),
+                icon: Image.asset('assets/icons/navi1.png', height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi1_active.png', height: size.height * 0.025),
                 label: 'บริการ',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/navi3.png',
-                    height: size.height * 0.025),
-                activeIcon: Image.asset('assets/icons/navi3_active.png',
-                    height: size.height * 0.025),
+                icon: Image.asset('assets/icons/navi3.png', height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi3_active.png', height: size.height * 0.025),
                 label: 'สินค้า',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/navi4.png',
-                    height: size.height * 0.025),
-                activeIcon: Image.asset('assets/icons/navi4_active.png',
-                    height: size.height * 0.025),
+                icon: Image.asset('assets/icons/navi4.png', height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi4_active.png', height: size.height * 0.025),
                 label: 'คำสั่งซื้อ',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/navi3.png',
-                    height: size.height * 0.025),
-                activeIcon: Image.asset('assets/icons/navi3_active.png',
-                    height: size.height * 0.025),
+                icon: Image.asset('assets/icons/navi3.png', height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi3_active.png', height: size.height * 0.025),
                 label: 'เกี่ยวกับบริษัท',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/navi5.png',
-                    height: size.height * 0.025),
-                activeIcon: Image.asset('assets/icons/navi5_active.png',
-                    height: size.height * 0.025),
-                label: 'ตั้งค่าโปรไฟล์.',
+                icon: Image.asset('assets/icons/navi5.png', height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi5_active.png', height: size.height * 0.025),
+                label: 'ตั้งค่า',
               ),
             ],
             currentIndex: selectedIndex,

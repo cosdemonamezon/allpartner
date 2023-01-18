@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'company.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
       id: json['id'] as int?,
       permission_id: json['permission_id'] as String?,
       username: json['username'] as String?,
@@ -17,15 +17,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       image: json['image'] as String?,
       status: json['status'] as String?,
       type: json['type'] as String?,
-      scraps: (json['scraps'] as List<dynamic>?)
-          ?.map((e) => Scraps.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      logistics: (json['logistics'] as List<dynamic>?)
-          ?.map((e) => Logistic.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      No: json['No'] as int?,
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
       'id': instance.id,
       'permission_id': instance.permission_id,
       'username': instance.username,
@@ -36,6 +31,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'image': instance.image,
       'status': instance.status,
       'type': instance.type,
-      'scraps': instance.scraps,
-      'logistics': instance.logistics,
+      'No': instance.No,
     };

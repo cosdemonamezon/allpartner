@@ -12,7 +12,6 @@ Scraps _$ScrapsFromJson(Map<String, dynamic> json) => Scraps(
       name: json['name'] as String?,
       qty: json['qty'] as String?,
       description: json['description'] as String?,
-      image: json['image'] as String?,
       status: json['status'] as String?,
     );
 
@@ -22,6 +21,5 @@ Map<String, dynamic> _$ScrapsToJson(Scraps instance) => <String, dynamic>{
       'name': instance.name,
       'qty': instance.qty,
       'description': instance.description,
-      'image': instance.image,
       'status': instance.status,
     };
