@@ -1,28 +1,27 @@
-import 'package:allpartner/Screen/Allpartner/Search/Scrap/Detail/DetailScrapPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../appTheme.dart';
 import '../../../Widgets/SearchTextField.dart';
 import '../ProductController.dart';
-import '../Quotation/QuotationPage.dart';
+import 'Detail/DetailPurchasePage.dart';
 
-class ScrapPage extends StatefulWidget {
-  const ScrapPage({super.key, required this.id});
-  final int id;
+class PurchasePage extends StatefulWidget {
+  PurchasePage({super.key, this.id});
+  int? id;
 
   @override
-  State<ScrapPage> createState() => _ScrapPageState();
+  State<PurchasePage> createState() => _PurchasePageState();
 }
 
-class _ScrapPageState extends State<ScrapPage> {
+class _PurchasePageState extends State<PurchasePage> {
   void initState() {
     super.initState();
     _loadItem();
   }
 
   Future _loadItem() async {
-    await context.read<ProductController>().loadScrapCompany(id: widget.id);
+    await context.read<ProductController>().loadPuchaseCompany(id: widget.id!);
   }
 
   @override
@@ -34,7 +33,7 @@ class _ScrapPageState extends State<ScrapPage> {
         appBar: AppBar(
           elevation: 0,
           title: Text(
-            'Scrap',
+            'Purchase',
             //style: TextStyle(color: Colors.deepOrange),
           ),
           backgroundColor: Colors.transparent,
@@ -54,14 +53,14 @@ class _ScrapPageState extends State<ScrapPage> {
               ),
               Container(
                 padding: EdgeInsets.all(15),
-                child: controller.scrapCompany.isEmpty
+                child: controller.puchaseCompany.isEmpty
                     ? Center(child: CircularProgressIndicator())
                     : ListView.builder(
                         // controller: _controller,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.scrapCompany[0].scraps!.length,
+                        itemCount: controller.puchaseCompany[0].puchases!.length,
                         itemBuilder: (_, index) {
                           // if (index < controller.logisticCompany.length) {
                           return Padding(
@@ -71,11 +70,11 @@ class _ScrapPageState extends State<ScrapPage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => DetailScrapPage(
-                                              id: controller.scrapCompany[0].scraps![index].id,
-                                              name: controller.scrapCompany[0].scraps![index].name,
-                                              qty: controller.scrapCompany[0].scraps![index].qty,
-                                              description: controller.scrapCompany[0].scraps![index].description,
+                                        builder: (context) => DetailPurchasePage(
+                                              id: controller.puchaseCompany[0].puchases![index].id,
+                                              name: controller.puchaseCompany[0].puchases![index].name,
+                                              qty: controller.puchaseCompany[0].puchases![index].qty,
+                                              description: controller.puchaseCompany[0].puchases![index].description,
                                               company: controller.scrapCompany[0].name,
                                               image: controller.scrapCompany[0].image,
                                             )));
@@ -118,19 +117,19 @@ class _ScrapPageState extends State<ScrapPage> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                controller.scrapCompany[0].scraps![index].name ?? '',
+                                                controller.puchaseCompany[0].puchases![index].name ?? '',
                                                 style:
                                                     TextStyle(fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
                                               ),
                                               SizedBox(height: 5),
                                               Text(
-                                                'รายละเอียด ${controller.scrapCompany[0].scraps![index].description ?? ''}',
+                                                'รายละเอียด ${controller.puchaseCompany[0].puchases![index].description ?? ''}',
                                                 style: TextStyle(fontSize: appFontSize?.body2),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               SizedBox(height: 4),
                                               Text(
-                                                'จำนวน ${controller.scrapCompany[0].scraps![index].qty ?? ''} ',
+                                                'จำนวน ${controller.puchaseCompany[0].puchases![index].qty ?? ''} ',
                                                 style: TextStyle(fontSize: appFontSize?.body2),
                                                 overflow: TextOverflow.ellipsis,
                                               ),

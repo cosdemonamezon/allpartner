@@ -1,4 +1,3 @@
-
 import 'package:allpartner/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -92,9 +91,7 @@ class _RegisTextFieldState extends State<RegisTextField> {
                 onTap: () {
                   setState(() => isObscureText = !isObscureText);
                 },
-                child: Icon(!isObscureText
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined),
+                child: Icon(!isObscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined),
               )
             : null,
       ),

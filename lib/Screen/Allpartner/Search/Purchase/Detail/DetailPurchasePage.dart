@@ -1,23 +1,29 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../Quotation/QuotationPage.dart';
 
-class DetailScrapPage extends StatefulWidget {
-  DetailScrapPage({super.key, this.name, this.qty, this.description, this.company, this.image, this.id});
+class DetailPurchasePage extends StatefulWidget {
+  DetailPurchasePage({
+    super.key,
+    this.id,
+    this.name,
+    this.qty,
+    this.description,
+    this.company,
+    this.image,
+  });
+  int? id;
   String? name;
   String? qty;
   String? description;
   String? company;
   String? image;
-  int? id;
 
   @override
-  State<DetailScrapPage> createState() => _DetailScrapPageState();
+  State<DetailPurchasePage> createState() => _DetailPurchasePageState();
 }
 
-class _DetailScrapPageState extends State<DetailScrapPage> {
+class _DetailPurchasePageState extends State<DetailPurchasePage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -162,7 +168,7 @@ class _DetailScrapPageState extends State<DetailScrapPage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return QuotationPage(
-                      page: 'Scrap',
+                      page: 'Purchase',
                       companieId: widget.id!,
                     );
                   }));

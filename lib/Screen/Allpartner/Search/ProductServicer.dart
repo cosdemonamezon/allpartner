@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Model/Qoutation/quotation.dart';
 import '../../../Model/company/company.dart';
 import '../../../Model/user.dart';
 import '../../../constants/constants.dart';
@@ -91,52 +94,116 @@ class ProductService {
     }
   }
 
-  // Future<UserDetailJob?> setInformationDetil({
-  //   String? user_job_id,
-  //   String? location_of_educate,
-  //   String? major,
-  //   String? degree,
-  //   String? grade,
-  //   String? finished,
-  //   String? thai,
-  //   String? english,
-  //   String? china,
-  //   String? japan,
-  //   String? exp,
-  //   String? position,
-  //   String? salary,
-  //   String? remark,
-  // }) async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   final token = pref.getString('token');
-  //   final url = Uri.parse('$pathApi/api/user_job_detail');
-  //   final response = await http.post(url,
-  //       body: jsonEncode({
-  //         "user_job_id": user_job_id,
-  //         "location_of_educate": location_of_educate == "" ? '-' : location_of_educate,
-  //         "major": major == "" ? '-' : major,
-  //         "degree": degree,
-  //         "grade": grade == "" ? '-' : grade,
-  //         "finished": finished == "" ? '-' : finished,
-  //         "thai": thai,
-  //         "english": english,
-  //         "china": china,
-  //         "japan": japan,
-  //         "exp": exp == "" ? '-' : exp,
-  //         "position": position == "" ? '-' : position,
-  //         "salary": salary == "" ? '-' : salary,
-  //         "remark": remark == "" ? '-' : remark,
-  //       }),
-  //       headers: {
-  //         'Authorization': 'Bearer ${token}',
-  //         'Content-Type': 'application/json',
-  //       });
-  //   if (response.statusCode == 200) {
-  //     final responseString = jsonDecode(response.body);
-  //     return UserDetailJob.fromJson(responseString["data"]);
-  //   } else {
-  //     final responseString = jsonDecode(response.body);
-  //     throw responseString['message'];
-  //   }
-  // }
+  //โหลดPurchase ของCustomer
+  static Future<List<User>> getPurchaseCustomer({required int companyId}) async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/purchase_by_companie/$companyId');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final list = data['data'] as List;
+
+      return list.map((e) => User.fromJson(e)).toList();
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+// ใบเสนอราคา Sracp
+  Future<Quotation?> postQuotationScrap({
+    required String user_id,
+    required String scrap_companie_id,
+    required String remark,
+    required String title,
+    required PlatformFile file,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // final files = image.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final token = pref.getString('token');
+    final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
+    final formData = FormData.fromMap(
+      {
+        "user_id": user_id,
+        "scrap_companie_id": scrap_companie_id,
+        "remark": remark,
+        "title": title,
+        'file': MultipartFile.fromFileSync(file.path!),
+      },
+    );
+    try {
+      final response =
+          await Dio().post('$baseUrl/api/scrap_quotation', data: formData, options: Options(headers: headers));
+
+      return Quotation.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw (e.response?.data['message']);
+    }
+  }
+
+// ใบเสนอราคา Logistic
+  Future<Quotation?> postQuotationLogistic({
+    required String user_id,
+    required String logistic_companie_id,
+    required String remark,
+    required String title,
+    required PlatformFile file,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // final files = file.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final token = pref.getString('token');
+    final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
+    final formData = FormData.fromMap(
+      {
+        "user_id": user_id,
+        "logistic_companie_id": logistic_companie_id,
+        "remark": remark,
+        "title": title,
+        'file': MultipartFile.fromFileSync(file.path!),
+      },
+    );
+    try {
+      final response =
+          await Dio().post('$baseUrl/api/logistic_quotation', data: formData, options: Options(headers: headers));
+
+      return Quotation.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw (e.response?.data['message']);
+    }
+  }
+
+// ใบเสนอราคา Purchase
+  Future<Quotation?> postQuotationPurchase({
+    required String user_id,
+    required String purchase_companie_id,
+    required String remark,
+    required String title,
+    required PlatformFile file,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // final files = image.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final token = pref.getString('token');
+    final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
+    final formData = FormData.fromMap(
+      {
+        "user_id": user_id,
+        "purchase_companie_id": purchase_companie_id,
+        "remark": remark,
+        "title": title,
+        'file': MultipartFile.fromFileSync(file.path!),
+      },
+    );
+    try {
+      final response =
+          await Dio().post('$baseUrl/api/purchase_quotation', data: formData, options: Options(headers: headers));
+
+      return Quotation.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw (e.response?.data['message']);
+    }
+  }
 }

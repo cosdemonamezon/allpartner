@@ -14,6 +14,7 @@ class ProductController extends ChangeNotifier {
   // List<User> productCompany = [];
   List<Company> compayCustomer = [];
   List<User> logisticCompany = [];
+  List<User> puchaseCompany = [];
   List<User> scrapCompany = [];
 
   // ProductCompany
@@ -62,6 +63,17 @@ class ProductController extends ChangeNotifier {
     scrapCompany.clear();
     final _loadPositionS = await ProductService.getScrapCustomer(companyId: id);
     scrapCompany.addAll(_loadPositionS);
+    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
+    notifyListeners();
+  }
+
+  //โหลดPuchase ของCustomer
+  Future<void> loadPuchaseCompany({
+    required int id,
+  }) async {
+    puchaseCompany.clear();
+    final _loadPositionP = await ProductService.getPurchaseCustomer(companyId: id);
+    puchaseCompany.addAll(_loadPositionP);
     // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }

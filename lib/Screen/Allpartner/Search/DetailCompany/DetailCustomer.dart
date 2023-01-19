@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../../appTheme.dart';
 import '../../../Widgets/SearchTextField.dart';
 import '../ProductController.dart';
+import '../Purchase/PurchasePage.dart';
 
 class DetailCustomer extends StatefulWidget {
   const DetailCustomer({super.key, required this.id});
@@ -95,6 +96,16 @@ class _DetailCustomerState extends State<DetailCustomer> with TickerProviderStat
                         },
                         child: SizedBox(
                           child: Text('Scrap'),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return PurchasePage(id: widget.id);
+                          }));
+                        },
+                        child: SizedBox(
+                          child: Text('Purchase'),
                         ),
                       ),
                     ],

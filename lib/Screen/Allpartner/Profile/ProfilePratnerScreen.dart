@@ -98,6 +98,11 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
     return Consumer<AppController>(
       builder: (context, controller, child) {
         final user = context.read<AppController>().user;
+        username.text = user!.name ?? '';
+        email.text = user.email ?? '';
+        phonenumber.text = user.phone ?? '';
+        // address.text = user. ?? '';
+
         return Scaffold(
           appBar: AppBar(
             title: Text('Profile', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -247,7 +252,7 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
                   onSaved: (input) => username.text = input!,
                   validator: (input) => input!.length < 3 ? "Should be more than 3 letters" : null,
                   initialValue: username.text,
-                  hintText: user!.name,
+                  hintText: user.name,
                   labelText: "Company",
                   iconData: Icons.person_outline,
                 ),

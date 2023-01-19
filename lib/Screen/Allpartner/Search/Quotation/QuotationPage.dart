@@ -1,15 +1,21 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
+import 'package:provider/provider.dart';
 
 import '../../../Widgets/ButtonRounded.dart';
+import '../../../app/appController.dart';
 import '../../Profile/Widgets/AddTextForm.dart';
+import '../ProductServicer.dart';
 
 class QuotationPage extends StatefulWidget {
-  const QuotationPage({super.key});
-
+  const QuotationPage({super.key, required this.page, required this.companieId});
+  final String page;
+  final int companieId;
   @override
   State<QuotationPage> createState() => _QuotationPageState();
 }
@@ -20,10 +26,22 @@ class _QuotationPageState extends State<QuotationPage> {
   final TextEditingController remark = TextEditingController();
   final _controller = ScrollController();
   FilePickerResult? result;
-  List<PlatformFile>? listFile;
+  PlatformFile? _selectedFile;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _firstInstall();
+  }
+
+  Future<void> _firstInstall() async {
+    await context.read<AppController>().initialize();
+    final user = context.read<AppController>().user;
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final user = context.read<AppController>().user;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -97,27 +115,12 @@ class _QuotationPageState extends State<QuotationPage> {
                               //     style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               //   ),
                               // ),
-                              listFile != null
-                                  ? GridView.builder(
-                                      shrinkWrap: true,
-                                      controller: _controller,
-                                      padding: EdgeInsets.all(15),
-                                      scrollDirection: Axis.vertical,
-                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 1,
-                                      ),
-                                      itemCount: listFile!.length,
-                                      itemBuilder: (context, index) {
-                                        final file = listFile![index];
-                                        inspect(file);
 
-                                        return buildFille(file);
-                                      })
-                                  : SizedBox.shrink(),
+                              _selectedFile != null ? Center(child: buildFille(_selectedFile!)) : SizedBox.shrink(),
                               SizedBox(
                                 height: size.height * 0.2,
                               ),
-                              listFile != null && listFile!.isNotEmpty
+                              _selectedFile != null
                                   ? Center(
                                       child: Container(
                                         height: size.height * 0.05,
@@ -126,7 +129,7 @@ class _QuotationPageState extends State<QuotationPage> {
                                         child: InkWell(
                                           onTap: () async {
                                             setState(() {
-                                              listFile!.clear();
+                                              _selectedFile = null;
                                             });
                                           },
                                           child: Center(
@@ -148,7 +151,7 @@ class _QuotationPageState extends State<QuotationPage> {
                                             setState(() {
                                               if (result == null) return;
 
-                                              listFile = result.files;
+                                              _selectedFile = result.files[0];
                                             });
                                           },
                                           child: Center(
@@ -171,7 +174,6 @@ class _QuotationPageState extends State<QuotationPage> {
                               //             final result = await FilePicker.platform.pickFiles();
                               //             setState(() {
                               //               if (result == null) return;
-
                               //               listFile = result.files;
                               //             });
                               //           },
@@ -205,7 +207,7 @@ class _QuotationPageState extends State<QuotationPage> {
                               //     ],
                               //   ),
                               SizedBox(
-                                height: size.height * 0.25,
+                                height: size.height * 0.15,
                               ),
                               ButtonRounded(
                                 text: 'บันทึก',
@@ -227,48 +229,63 @@ class _QuotationPageState extends State<QuotationPage> {
                                         CupertinoDialogAction(
                                           child: Text(
                                             'ยกเลิก',
-                                            // style: TextStyle(
-                                            //   color: kThemeTextColor,
-                                            //   fontFamily: fontFamily,
-                                            //   fontWeight: FontWeight.bold,
-                                            // ),
                                           ),
                                           onPressed: () => Navigator.pop(context),
                                         ),
                                         CupertinoDialogAction(
                                           child: Text(
                                             'ตกลง',
-                                            // style: TextStyle(
-                                            //   color: kThemeTextColor,
-                                            //   fontFamily: fontFamily,
-                                            // ),
                                           ),
                                           onPressed: () async {
-                                            // addFormKey.currentState!.save();
-                                            // // LoadingDialog.open(context);
-                                            // // final String position1 = position.text;
-                                            // // final String degree1 = degree.text;
-                                            // // final String major1 = major.text;
-                                            // // final String salary1 = salary.text;
-                                            // // final String exp1 = exp.text;
-                                            // // final String qty1 = qty.text;
-                                            // // final String description1 = description.text;
-                                            // await JobService().updatePosition(
-                                            //     positionId: widget.idPosition!,
-                                            //     user_id: widget.idCompany.toString(),
-                                            //     position: position.text,
-                                            //     degree: degree.text,
-                                            //     major: major.text,
-                                            //     salary: salary.text,
-                                            //     exp: exp.text,
-                                            //     qty: qty.text,
-                                            //     description: description.text);
-                                            // await context.read<JobController>().loadPositionCompay(id: widget.idCompany!);
-                                            // LoadingDialog.close(context);
-                                            if (mounted) {
-                                              Navigator.of(context)
-                                                ..pop()
-                                                ..pop();
+                                            switch (widget.page) {
+                                              case "Logistic":
+                                                {
+                                                  await ProductService().postQuotationLogistic(
+                                                    user_id: user!.id.toString(),
+                                                    logistic_companie_id: widget.companieId.toString(),
+                                                    title: title.text,
+                                                    remark: remark.text,
+                                                    file: _selectedFile!,
+                                                  );
+                                                  if (mounted) {
+                                                    Navigator.of(context)
+                                                      ..pop()
+                                                      ..pop();
+                                                  }
+                                                  break;
+                                                }
+                                              case "Scrap":
+                                                {
+                                                  await ProductService().postQuotationScrap(
+                                                    user_id: user!.id.toString(),
+                                                    scrap_companie_id: widget.companieId.toString(),
+                                                    title: title.text,
+                                                    remark: remark.text,
+                                                    file: _selectedFile!,
+                                                  );
+                                                  if (mounted) {
+                                                    Navigator.of(context)
+                                                      ..pop()
+                                                      ..pop();
+                                                  }
+                                                  break;
+                                                }
+                                              case "Purchase":
+                                                {
+                                                  await ProductService().postQuotationPurchase(
+                                                    user_id: user!.id.toString(),
+                                                    purchase_companie_id: widget.companieId.toString(),
+                                                    title: title.text,
+                                                    remark: remark.text,
+                                                    file: _selectedFile!,
+                                                  );
+                                                  if (mounted) {
+                                                    Navigator.of(context)
+                                                      ..pop()
+                                                      ..pop();
+                                                  }
+                                                  break;
+                                                }
                                             }
                                           },
                                         )
@@ -296,8 +313,10 @@ class _QuotationPageState extends State<QuotationPage> {
     final extension = file.extension ?? 'none';
 
     return InkWell(
-      onTap: () {},
+      onTap: () => OpenFile.open(file.path),
       child: Container(
+        width: 200,
+        height: 200,
         padding: EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,7 +336,7 @@ class _QuotationPageState extends State<QuotationPage> {
             ),
             Text(
               file.name,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
               overflow: TextOverflow.ellipsis,
             )
           ],

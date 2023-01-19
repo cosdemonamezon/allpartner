@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
+import 'Screen/Allpartner/Profile/ProfileController.dart';
 import 'Screen/Allpartner/Search/ProductController.dart';
 import 'Screen/app/appController.dart';
 
@@ -13,6 +14,7 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (_) => AppController()),
       ChangeNotifierProvider(create: (_) => ProductController()),
+      ChangeNotifierProvider(create: (_) => ProfileController()),
     ],
     child: const MyApp(),
   ));

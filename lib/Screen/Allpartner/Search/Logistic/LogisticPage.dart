@@ -74,6 +74,7 @@ class _LogisticPageState extends State<LogisticPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => DetailLogisticPage(
+                                                id: controller.logisticCompany[0].logistics![index].id,
                                                 name: controller.logisticCompany[0].logistics![index].name,
                                                 width: controller.logisticCompany[0].logistics![index].width,
                                                 weight: controller.logisticCompany[0].logistics![index].weight,

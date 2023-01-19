@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       textColor: Colors.white,
                       onPressed: () {
                         LoadingDialog.open(context);
-                        signIn(email: email.text, password: password.text);
+                        signIn(email: email.text, password: password.text, type: 'partner');
                       },
                     ),
                     SizedBox(height: 25),
@@ -122,11 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<bool?> signIn({
     required String email,
     required String password,
+    required String type,
   }) async {
     final url = Uri.parse('$baseUrl/api/login');
     final response = await http.post(url, body: {
       'username': email,
       'password': password,
+      'type': type,
     });
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);

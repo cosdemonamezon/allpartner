@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Login/WelcomeScreen.dart';
+import '../Widgets/LoadingDialog.dart';
 import '../Widgets/cupertinoAlertDialog.dart';
 import 'Service.dart';
 
@@ -218,6 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       hintText: 'กรอกเบอร์โทรศัพท์',
                                       maxLength: 10,
                                       isHideCounter: true,
+                                      keyboardType: TextInputType.phone,
                                     ),
                                   ),
                                 ],
@@ -276,57 +278,78 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 padding: EdgeInsets.only(bottom: padding.bottom),
                                 height: size.height / 7,
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                                   child: Column(
                                     children: [
                                       SizedBox(height: 8),
                                       ButtonRounded(
                                         text: 'สมัครสมาชิก',
-                                        color: kThemeTextColor,
+                                        color: Colors.blue,
                                         textColor: Colors.white,
                                         onPressed: () async {
-                                          if (_selectedFile != null) {
-                                            final userCompany = await RegisterService().setInformation(
-                                              permission_id: '1',
-                                              username: email.text,
-                                              password: password.text,
-                                              name: firstname.text,
-                                              email: email.text,
-                                              phone: phone.text,
-                                              type: 'partner',
-                                              line_token: '-',
-                                              image: _selectedFile!,
-                                            );
-                                            // try {
-                                            if (userCompany != null) {
-                                              return showCupertinoDialog(
-                                                  context: context,
-                                                  builder: (context) => CupertinoQuestion(
-                                                        title: 'ลงทะเบียนใช้งาน',
-                                                        content: 'การลงทะเบียนสำเร็จ',
-                                                        press: () {
-                                                          Navigator.push(context,
-                                                              MaterialPageRoute(builder: (context) => WelcomeScreen()));
-                                                        },
-                                                      ));
+                                          try {
+                                            if (_selectedFile != null) {
+                                              LoadingDialog.open(context);
+                                              final userCompany = await RegisterService().setInformation(
+                                                permission_id: '1',
+                                                username: email.text,
+                                                password: password.text,
+                                                name: firstname.text,
+                                                email: email.text,
+                                                phone: phone.text,
+                                                type: 'partner',
+                                                line_token: '-',
+                                                image: _selectedFile!,
+                                              );
+                                              if (userCompany != null) {
+                                                return showCupertinoDialog(
+                                                    context: context,
+                                                    builder: (context) => CupertinoQuestion(
+                                                          title: 'ลงทะเบียนใช้งาน',
+                                                          content: 'การลงทะเบียนสำเร็จ',
+                                                          press: () {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => WelcomeScreen()));
+                                                          },
+                                                        ));
+                                              }
                                             }
+                                            return showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.blueAccent,
+                                                title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                content: Text('กรุณาใส่รูป', style: TextStyle(color: Colors.white)),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        LoadingDialog.close(context);
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                ],
+                                              ),
+                                            );
+                                          } catch (e) {
+                                            LoadingDialog.close(context);
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.blueAccent,
+                                                title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                ],
+                                              ),
+                                            );
                                           }
-                                          return showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              backgroundColor: Colors.blueAccent,
-                                              title: Text("Error", style: TextStyle(color: Colors.white)),
-                                              content:
-                                                  Text('กรุณาใส่ให้ครบทุกช่อง', style: TextStyle(color: Colors.white)),
-                                              actions: [
-                                                TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text('OK', style: TextStyle(color: Colors.white)))
-                                              ],
-                                            ),
-                                          );
                                         },
                                       )
                                     ],

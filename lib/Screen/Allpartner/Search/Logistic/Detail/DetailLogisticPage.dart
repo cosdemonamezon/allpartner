@@ -12,7 +12,8 @@ class DetailLogisticPage extends StatefulWidget {
       this.description,
       this.transportType,
       this.company,
-      this.image});
+      this.image,
+      this.id});
   String? name;
   String? width;
   String? height;
@@ -22,12 +23,20 @@ class DetailLogisticPage extends StatefulWidget {
   String? transportType;
   String? company;
   String? image;
+  int? id;
 
   @override
   State<DetailLogisticPage> createState() => _DetailLogisticPageState();
 }
 
 class _DetailLogisticPageState extends State<DetailLogisticPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,7 +173,10 @@ class _DetailLogisticPageState extends State<DetailLogisticPage> {
               InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return QuotationPage();
+                    return QuotationPage(
+                      page: 'Logistic',
+                      companieId: widget.id!,
+                    );
                   }));
                 },
                 child: Container(

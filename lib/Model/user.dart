@@ -1,3 +1,5 @@
+import 'package:allpartner/Model/partnerVendor.dart';
+import 'package:allpartner/Model/purchase.dart';
 import 'package:allpartner/Model/scraps.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -7,20 +9,20 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  User({
-    this.id,
-    this.permission_id,
-    this.username,
-    this.name,
-    this.email,
-    this.phone,
-    this.line_token,
-    this.image,
-    this.status,
-    this.type,
-    this.scraps,
-    this.logistics,
-  });
+  User(
+      {this.id,
+      this.permission_id,
+      this.username,
+      this.name,
+      this.email,
+      this.phone,
+      this.line_token,
+      this.image,
+      this.status,
+      this.type,
+      this.scraps,
+      this.logistics,
+      this.partner_detail});
 
   int? id;
   String? permission_id;
@@ -34,6 +36,8 @@ class User {
   String? type;
   List<Scraps>? scraps;
   List<Logistic>? logistics;
+  List<Purchase>? puchases;
+  PartnerVendor? partner_detail;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
