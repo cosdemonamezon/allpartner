@@ -66,8 +66,7 @@ class _DetailLogisticPageState extends State<DetailLogisticPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(
                     children: [
                       CircleAvatar(
                         backgroundColor: Colors.transparent,
@@ -157,47 +156,50 @@ class _DetailLogisticPageState extends State<DetailLogisticPage> {
                 ],
               ),
             ),
-          )
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        clipBehavior: Clip.hardEdge,
-        //shape: CircularNotchedRectangle(),
-        elevation: 25,
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-          height: MediaQuery.of(context).size.height * 0.07,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return QuotationPage(
-                      page: 'Logistic',
-                      companieId: widget.id!,
-                    );
-                  }));
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 0.32,
-                  //color: Colors.red,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Center(
-                      child: Text(
-                    'เสนอราคา',
-                    style: TextStyle(color: Colors.white),
-                  )),
-                ),
-              ),
-            ],
           ),
-        ),
+          SizedBox(
+            height: 50,
+          ),
+          BottomAppBar(
+            clipBehavior: Clip.hardEdge,
+            //shape: CircularNotchedRectangle(),
+            elevation: 0,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return QuotationPage(
+                          page: 'Logistic',
+                          companieId: widget.id!,
+                        );
+                      }));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.32,
+                      //color: Colors.red,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                      child: Center(
+                          child: Text(
+                        'เสนอราคา',
+                        style: TextStyle(color: Colors.white),
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

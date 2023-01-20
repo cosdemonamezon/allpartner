@@ -1,5 +1,4 @@
 import 'package:allpartner/Screen/Allpartner/Search/Logistic/LogisticPage.dart';
-import 'package:allpartner/Screen/Allpartner/Search/Quotation/QuotationPage.dart';
 import 'package:allpartner/Screen/Allpartner/Search/Scrap/ScrapPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -75,37 +74,97 @@ class _DetailCustomerState extends State<DetailCustomer> with TickerProviderStat
                       //   padding: EdgeInsets.symmetric(horizontal: 10),
                       //   child: SearchTextField(),
                       // ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return LogisticPage(id: widget.id);
-                          }));
-                        },
-                        child: SizedBox(
-                          child: Text('Logistic'),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return LogisticPage(id: widget.id);
+                            }));
+                          },
+                          child: Container(
+                            width: size.width,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/promotionBG.png'),
+                                fit: BoxFit.fill,
+                              ),
+                              boxShadow: const [
+                                BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+                              ],
+                            ),
+                            child: Center(
+                              child: SizedBox(
+                                child: Text(
+                                  'Logistic',
+                                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ScrapPage(id: widget.id);
-                          }));
-                        },
-                        child: SizedBox(
-                          child: Text('Scrap'),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return ScrapPage(id: widget.id);
+                            }));
+                          },
+                          child: Container(
+                            width: size.width,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/promotionBG.png'),
+                                fit: BoxFit.fill,
+                              ),
+                              boxShadow: const [
+                                BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+                              ],
+                            ),
+                            child: Center(
+                              child: SizedBox(
+                                child: Text(
+                                  'Scrap',
+                                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return PurchasePage(id: widget.id);
-                          }));
-                        },
-                        child: SizedBox(
-                          child: Text('Purchase'),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return PurchasePage(id: widget.id);
+                            }));
+                          },
+                          child: Container(
+                            width: size.width,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/promotionBG.png'),
+                                fit: BoxFit.fill,
+                              ),
+                              boxShadow: const [
+                                BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+                              ],
+                            ),
+                            child: Center(
+                              child: SizedBox(
+                                child: Text(
+                                  'Purchase',
+                                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
