@@ -25,6 +25,7 @@ class ProfileSettingScreen extends StatefulWidget {
 }
 
 class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

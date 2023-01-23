@@ -77,16 +77,12 @@ class _PurchaseOrderState extends State<PurchaseOrder> {
                             ListTile(
                               title: Text(comtlist[index]['title']),
                               subtitle: Text(
-                                '${index + 1}.' +
-                                    '${comtlist[index]['subtitle']}',
+                                '${index + 1}.' '${comtlist[index]['subtitle']}',
                                 style: TextStyle(fontSize: 15),
                               ),
                               trailing: InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => OrderDetail()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDetail()));
                                 },
                                 child: Container(
                                   height: size.height * 0.04,

@@ -27,6 +27,7 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
   final TextEditingController address = TextEditingController();
   File? _selectedFile;
   String? userImage;
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -35,8 +36,8 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
 
   Future<void> _firstInstall() async {
     await context.read<AppController>().initialize();
-    final user = await context.read<AppController>().user?.image;
-    userImage = await user;
+    final user = context.read<AppController>().user?.image;
+    userImage = user;
   }
 
   Widget getImageWidget() {

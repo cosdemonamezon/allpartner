@@ -36,7 +36,7 @@ class _VendorPageState extends State<VendorPage> {
   List<PlatformFile>? listFile;
   final _controller = ScrollController();
   String? _selectedValue;
-
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

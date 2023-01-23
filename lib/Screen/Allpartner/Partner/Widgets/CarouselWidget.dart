@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CarouselWidget extends StatelessWidget {
-  List<Map<String, dynamic>>? partner;
+  final List<Map<String, dynamic>>? partner;
   CarouselWidget({Key? key, this.partner}) : super(key: key);
 
   @override
@@ -20,15 +20,11 @@ class CarouselWidget extends StatelessWidget {
               child: Container(
                 width: 100,
                 height: 100,
-                margin: EdgeInsetsDirectional.only(
-                    end: 20, start: index == 0 ? 20 : 0),
+                margin: EdgeInsetsDirectional.only(end: 20, start: index == 0 ? 20 : 0),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                      colors: [
-                        Colors.blueAccent.withOpacity(1),
-                        Colors.blue.withOpacity(0.1)
-                      ],
+                      colors: [Colors.blueAccent.withOpacity(1), Colors.blue.withOpacity(0.1)],
                       begin: AlignmentDirectional.topStart,
                       //const FractionalOffset(1, 0),
                       end: AlignmentDirectional.bottomEnd,
@@ -50,8 +46,7 @@ class CarouselWidget extends StatelessWidget {
                     //   ),
                     // ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(start: 10, top: 0),
+                      padding: const EdgeInsetsDirectional.only(start: 10, top: 0),
                       child: Text(
                         partner![index]['name'],
                         maxLines: 2,

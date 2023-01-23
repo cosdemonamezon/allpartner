@@ -129,7 +129,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     Positioned(
                       top: 40,
                       left: 155,
-                      child: Container(
+                      child: SizedBox(
                         height: 170,
                         width: 190,
                         child: Column(

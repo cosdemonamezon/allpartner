@@ -71,9 +71,7 @@ class _UploadFileState extends State<UploadFile> {
                             child: Container(
                               height: size.height * 0.04,
                               width: size.width * 0.08,
-                              color: file != null
-                                  ? Colors.blueAccent
-                                  : Colors.grey,
+                              color: file != null ? Colors.blueAccent : Colors.grey,
                               child: Center(
                                   child: file != null
                                       ? Icon(
@@ -112,9 +110,7 @@ class _UploadFileState extends State<UploadFile> {
                             child: Container(
                               height: size.height * 0.04,
                               width: size.width * 0.08,
-                              color: file1 != null
-                                  ? Colors.blueAccent
-                                  : Colors.grey,
+                              color: file1 != null ? Colors.blueAccent : Colors.grey,
                               child: Center(
                                   child: file1 != null
                                       ? Icon(
@@ -143,7 +139,7 @@ class _UploadFileState extends State<UploadFile> {
         clipBehavior: Clip.hardEdge,
         //shape: CircularNotchedRectangle(),
         elevation: 25,
-        child: Container(
+        child: SizedBox(
           height: size.height * 0.10,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -151,45 +147,44 @@ class _UploadFileState extends State<UploadFile> {
               InkWell(
                 onTap: () {
                   showCupertinoDialog(
-                              context: context,
-                              builder: (context) => CupertinoAlertDialog(
-                                title: Text(
-                                  'ดำเนินการเรียบร้อย',
-                                  //style: TextStyle(fontFamily: fontFamily),
-                                ),
-                                content: Text(
-                                  'ต้องการออกจากหน้านี้หรือไม่',
-                                  //style: TextStyle(fontFamily: fontFamily),
-                                ),
-                                actions: <CupertinoDialogAction>[
-                                  CupertinoDialogAction(
-                                    child: Text(
-                                      'ยกเลิก',
-                                      // style: TextStyle(
-                                      //   color: kThemeTextColor,
-                                      //   fontFamily: fontFamily,
-                                      //   fontWeight: FontWeight.bold,
-                                      // ),
-                                    ),
-                                    onPressed: () =>
-                                        Navigator.pop(context, true),
-                                  ),
-                                  CupertinoDialogAction(
-                                    child: Text(
-                                      'ตกลง',
-                                      // style: TextStyle(
-                                      //   color: kThemeTextColor,
-                                      //   fontFamily: fontFamily,
-                                      // ),
-                                    ),
-                                    onPressed: () => Navigator.of(context)
-                                      ..pop()
-                                      ..pop()
-                                      ..pop(),
-                                  )
-                                ],
-                              ),
-                            );
+                    context: context,
+                    builder: (context) => CupertinoAlertDialog(
+                      title: Text(
+                        'ดำเนินการเรียบร้อย',
+                        //style: TextStyle(fontFamily: fontFamily),
+                      ),
+                      content: Text(
+                        'ต้องการออกจากหน้านี้หรือไม่',
+                        //style: TextStyle(fontFamily: fontFamily),
+                      ),
+                      actions: <CupertinoDialogAction>[
+                        CupertinoDialogAction(
+                          child: Text(
+                            'ยกเลิก',
+                            // style: TextStyle(
+                            //   color: kThemeTextColor,
+                            //   fontFamily: fontFamily,
+                            //   fontWeight: FontWeight.bold,
+                            // ),
+                          ),
+                          onPressed: () => Navigator.pop(context, true),
+                        ),
+                        CupertinoDialogAction(
+                          child: Text(
+                            'ตกลง',
+                            // style: TextStyle(
+                            //   color: kThemeTextColor,
+                            //   fontFamily: fontFamily,
+                            // ),
+                          ),
+                          onPressed: () => Navigator.of(context)
+                            ..pop()
+                            ..pop()
+                            ..pop(),
+                        )
+                      ],
+                    ),
+                  );
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),

@@ -1,7 +1,6 @@
 import 'package:allpartner/Screen/Allpartner/Partner/Widgets/CarouselWidget.dart';
 import 'package:allpartner/Screen/Allpartner/Partner/Widgets/RecommendedCarouselWidget.dart';
 import 'package:allpartner/Screen/Allpartner/Partner/Widgets/SlideItemWidget.dart';
-import 'package:allpartner/Screen/Widgets/HomeSearchBar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +29,7 @@ class _AllPartnerScreenState extends State<AllPartnerScreen> {
     {'name': 'Thai Partner Service', 'img': 'assets/images/image28.png', 'price': '480', 'old': '50'},
     {'name': 'Customer Service', 'img': 'assets/images/images25.png', 'price': '150', 'old': '150'}
   ];
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

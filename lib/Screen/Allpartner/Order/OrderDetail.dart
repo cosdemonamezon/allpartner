@@ -1,5 +1,4 @@
 import 'package:allpartner/Screen/Allpartner/Order/UploadFile.dart';
-import 'package:allpartner/Screen/Allpartner/Order/Widgets/RecordTexForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -160,14 +159,10 @@ class _OrderDetailState extends State<OrderDetail> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.01),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UploadFile()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => UploadFile()));
                       },
                       child: Container(
                         height: size.height * 0.06,
@@ -186,8 +181,7 @@ class _OrderDetailState extends State<OrderDetail> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.01),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
                     child: InkWell(
                       onTap: () {
                         showCupertinoDialog(

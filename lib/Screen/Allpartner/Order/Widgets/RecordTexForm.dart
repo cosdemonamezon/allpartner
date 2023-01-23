@@ -5,7 +5,7 @@ class RecordTextForm extends StatefulWidget {
 
   final TextEditingController? controller;
   final String? hintText;
-  int? maxLine;
+  final int? maxLine;
 
   @override
   State<RecordTextForm> createState() => _RecordTextFormState();

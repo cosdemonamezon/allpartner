@@ -8,6 +8,7 @@ import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Widgets/ButtonRounded.dart';
+import '../../../Widgets/LoadingDialog.dart';
 import '../../../app/appController.dart';
 import '../../Profile/Widgets/AddTextForm.dart';
 import '../ProductServicer.dart';
@@ -27,6 +28,7 @@ class _QuotationPageState extends State<QuotationPage> {
   final _controller = ScrollController();
   FilePickerResult? result;
   PlatformFile? _selectedFile;
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -240,50 +242,119 @@ class _QuotationPageState extends State<QuotationPage> {
                                             switch (widget.page) {
                                               case "Logistic":
                                                 {
-                                                  await ProductService().postQuotationLogistic(
-                                                    user_id: user!.id.toString(),
-                                                    logistic_companie_id: widget.companieId.toString(),
-                                                    title: title.text,
-                                                    remark: remark.text,
-                                                    file: _selectedFile!,
-                                                  );
-                                                  if (mounted) {
-                                                    Navigator.of(context)
-                                                      ..pop()
-                                                      ..pop();
+                                                  try {
+                                                    LoadingDialog.open(context);
+                                                    await ProductService().postQuotationLogistic(
+                                                      user_id: user!.id.toString(),
+                                                      logistic_companie_id: widget.companieId.toString(),
+                                                      title: title.text,
+                                                      remark: remark.text,
+                                                      file: _selectedFile!,
+                                                    );
+                                                    if (mounted) {
+                                                      LoadingDialog.close(context);
+                                                      Navigator.of(context)
+                                                        ..pop()
+                                                        ..pop();
+                                                    }
+                                                  } catch (e) {
+                                                    LoadingDialog.close(context);
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) => AlertDialog(
+                                                        backgroundColor: Colors.blueAccent,
+                                                        title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                        content:
+                                                            Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                        ],
+                                                      ),
+                                                    );
                                                   }
+
                                                   break;
                                                 }
                                               case "Scrap":
                                                 {
-                                                  await ProductService().postQuotationScrap(
-                                                    user_id: user!.id.toString(),
-                                                    scrap_companie_id: widget.companieId.toString(),
-                                                    title: title.text,
-                                                    remark: remark.text,
-                                                    file: _selectedFile!,
-                                                  );
-                                                  if (mounted) {
-                                                    Navigator.of(context)
-                                                      ..pop()
-                                                      ..pop();
+                                                  try {
+                                                    LoadingDialog.open(context);
+                                                    await ProductService().postQuotationScrap(
+                                                      user_id: user!.id.toString(),
+                                                      scrap_companie_id: widget.companieId.toString(),
+                                                      title: title.text,
+                                                      remark: remark.text,
+                                                      file: _selectedFile!,
+                                                    );
+                                                    if (mounted) {
+                                                      LoadingDialog.close(context);
+                                                      Navigator.of(context)
+                                                        ..pop()
+                                                        ..pop();
+                                                    }
+                                                  } catch (e) {
+                                                    LoadingDialog.close(context);
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) => AlertDialog(
+                                                        backgroundColor: Colors.blueAccent,
+                                                        title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                        content:
+                                                            Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                        ],
+                                                      ),
+                                                    );
                                                   }
+
                                                   break;
                                                 }
                                               case "Purchase":
                                                 {
-                                                  await ProductService().postQuotationPurchase(
-                                                    user_id: user!.id.toString(),
-                                                    purchase_companie_id: widget.companieId.toString(),
-                                                    title: title.text,
-                                                    remark: remark.text,
-                                                    file: _selectedFile!,
-                                                  );
-                                                  if (mounted) {
-                                                    Navigator.of(context)
-                                                      ..pop()
-                                                      ..pop();
+                                                  try {
+                                                    LoadingDialog.open(context);
+                                                    await ProductService().postQuotationPurchase(
+                                                      user_id: user!.id.toString(),
+                                                      purchase_companie_id: widget.companieId.toString(),
+                                                      title: title.text,
+                                                      remark: remark.text,
+                                                      file: _selectedFile!,
+                                                    );
+                                                    if (mounted) {
+                                                      LoadingDialog.close(context);
+                                                      Navigator.of(context)
+                                                        ..pop()
+                                                        ..pop();
+                                                    }
+                                                  } catch (e) {
+                                                    LoadingDialog.close(context);
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) => AlertDialog(
+                                                        backgroundColor: Colors.blueAccent,
+                                                        title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                        content:
+                                                            Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                        ],
+                                                      ),
+                                                    );
                                                   }
+
                                                   break;
                                                 }
                                             }

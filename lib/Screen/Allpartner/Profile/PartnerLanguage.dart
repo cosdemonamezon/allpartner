@@ -37,14 +37,13 @@ class _PartnerLanguageState extends State<PartnerLanguage> {
                     });
                   }
                 }
-                
               },
               contentPadding: EdgeInsets.zero,
               title: Text(
                 'English',
                 style: TextStyle(
                   fontSize: 16,
-                  color: langchang == true ?Colors.blue:Colors.black,
+                  color: langchang == true ? Colors.blue : Colors.black,
                 ),
               ),
               trailing: langchang == true
@@ -70,7 +69,7 @@ class _PartnerLanguageState extends State<PartnerLanguage> {
                 'ภาษาไทย',
                 style: TextStyle(
                   fontSize: 16,
-                  color: langchang == false ?Colors.blue:Colors.black,
+                  color: langchang == false ? Colors.blue : Colors.black,
                 ),
               ),
               trailing: langchang == false
@@ -93,7 +92,7 @@ class _PartnerLanguageState extends State<PartnerLanguage> {
         title: Text('เลือกภาษาที่ต้องการเปลี่ยน'),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            child: Text('เปลี่ยนเป็นภาษา ${lang}'),
+            child: Text('เปลี่ยนเป็นภาษา $lang'),
             onPressed: () async {
               if (lang == 'th') {
                 setState(() {
