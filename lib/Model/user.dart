@@ -1,3 +1,4 @@
+import 'package:allpartner/Model/Qoutation/quotation.dart';
 import 'package:allpartner/Model/partnerVendor.dart';
 import 'package:allpartner/Model/purchase.dart';
 import 'package:allpartner/Model/scraps.dart';
@@ -20,6 +21,7 @@ class User {
       this.image,
       this.status,
       this.type,
+      this.qoutations,
       this.scraps,
       this.logistics,
       this.partner_detail});
@@ -34,6 +36,7 @@ class User {
   String? image;
   String? status;
   String? type;
+  List<Quotation>? qoutations;
   List<Scraps>? scraps;
   List<Logistic>? logistics;
   List<Purchase>? puchases;

@@ -21,7 +21,7 @@ class _DetailCustomerState extends State<DetailCustomer> with TickerProviderStat
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 1, vsync: this);
     _loadItem();
   }
 
@@ -36,7 +36,7 @@ class _DetailCustomerState extends State<DetailCustomer> with TickerProviderStat
     final size = MediaQuery.of(context).size;
     return Consumer<ProductController>(
       builder: (context, controller, child) => DefaultTabController(
-        length: 2,
+        length: 1,
         child: Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -54,7 +54,7 @@ class _DetailCustomerState extends State<DetailCustomer> with TickerProviderStat
                 labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
                 tabs: [
                   Tab(text: 'บริการ'),
-                  Tab(text: 'ใบเสนอราคา'),
+                  // Tab(text: 'ใบเสนอราคา'),
                 ],
               ),
             ),
@@ -171,22 +171,22 @@ class _DetailCustomerState extends State<DetailCustomer> with TickerProviderStat
                   ),
                 ),
                 // Tap2
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: SearchTextField(),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                )
+                // SingleChildScrollView(
+                //   child: Column(
+                //     children: [
+                //       SizedBox(
+                //         height: 10,
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsets.symmetric(horizontal: 10),
+                //         child: SearchTextField(),
+                //       ),
+                //       SizedBox(
+                //         height: 10,
+                //       ),
+                //     ],
+                //   ),
+                // )
               ],
             )),
       ),

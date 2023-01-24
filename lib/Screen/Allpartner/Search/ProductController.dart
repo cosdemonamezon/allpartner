@@ -16,6 +16,11 @@ class ProductController extends ChangeNotifier {
   List<User> logisticCompany = [];
   List<User> puchaseCompany = [];
   List<User> scrapCompany = [];
+  ///////////
+  /////โหลดQuotatian ของPurchase
+  User? quotationPuchase;
+  User? quotationLogistic;
+  User? quotationScrap;
 
   // ProductCompany
   // Future<void> loadProductCompany({
@@ -75,6 +80,43 @@ class ProductController extends ChangeNotifier {
     final _loadPositionP = await ProductService.getPurchaseCustomer(companyId: id);
     puchaseCompany.addAll(_loadPositionP);
     // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
+    notifyListeners();
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //โหลดQuotatian ของPurchase
+  Future<void> loadQuotatianPurchase(
+    int id,
+  ) async {
+    quotationPuchase = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    quotationPuchase = await ProductService.getQuotatianPurchase(userId: id);
+
+    notifyListeners();
+  }
+
+  //โหลดQuotatian ของLogistic
+  Future<void> loadQuotatianLogistic(
+    int id,
+  ) async {
+    quotationLogistic = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    quotationLogistic = await ProductService.getQuotatianLogistic(userId: id);
+
+    notifyListeners();
+  }
+
+  //โหลดQuotatian ของScrap
+  Future<void> loadQuotatianScrap(
+    int id,
+  ) async {
+    quotationScrap = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    quotationScrap = await ProductService.getQuotatianScrap(userId: id);
+
     notifyListeners();
   }
 }

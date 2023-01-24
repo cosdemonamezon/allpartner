@@ -14,6 +14,7 @@ Quotation _$QuotationFromJson(Map<String, dynamic> json) => Quotation(
       remark: json['remark'] as String?,
       path: json['path'] as String?,
       status: json['status'] as String?,
+      remark_for_approve: json['remark_for_approve'] as String?,
     );
 
 Map<String, dynamic> _$QuotationToJson(Quotation instance) => <String, dynamic>{
@@ -24,4 +25,5 @@ Map<String, dynamic> _$QuotationToJson(Quotation instance) => <String, dynamic>{
       'remark': instance.remark,
       'path': instance.path,
       'status': instance.status,
+      'remark_for_approve': instance.remark_for_approve,
     };

@@ -17,6 +17,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       image: json['image'] as String?,
       status: json['status'] as String?,
       type: json['type'] as String?,
+      qoutations: (json['qoutations'] as List<dynamic>?)
+          ?.map((e) => Quotation.fromJson(e as Map<String, dynamic>))
+          .toList(),
       scraps: (json['scraps'] as List<dynamic>?)
           ?.map((e) => Scraps.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -42,6 +45,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'image': instance.image,
       'status': instance.status,
       'type': instance.type,
+      'qoutations': instance.qoutations,
       'scraps': instance.scraps,
       'logistics': instance.logistics,
       'puchases': instance.puchases,

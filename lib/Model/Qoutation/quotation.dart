@@ -12,6 +12,7 @@ class Quotation {
     this.remark,
     this.path,
     this.status,
+    this.remark_for_approve,
   });
 
   int? id;
@@ -21,6 +22,7 @@ class Quotation {
   String? remark;
   String? path;
   String? status;
+  String? remark_for_approve;
 
   factory Quotation.fromJson(Map<String, dynamic> json) => _$QuotationFromJson(json);
 
