@@ -47,7 +47,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                 //style: TextStyle(color: Colors.deepOrange),
               ),
               bottom: TabBar(
-                //isScrollable: true,
+                isScrollable: true,
                 controller: _tabController,
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.grey,
@@ -55,8 +55,8 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                 labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
                 tabs: [
                   Tab(text: 'รายการรอเสนอ'),
-                  Tab(text: 'รายการรออนุมัติ'),
-                  Tab(text: 'รายการอนุมัติ'),
+                  Tab(text: 'ใบเสนอราคารออนุมัติ'),
+                  Tab(text: 'ใบเสนอราคาอนุมัติ'),
                 ],
               ),
               backgroundColor: Colors.transparent,
