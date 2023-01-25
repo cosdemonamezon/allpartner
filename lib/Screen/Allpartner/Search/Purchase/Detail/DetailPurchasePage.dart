@@ -29,6 +29,7 @@ class _DetailPurchasePageState extends State<DetailPurchasePage> {
     // TODO: implement initState
     super.initState();
     print(widget.id);
+    print(widget.name);
   }
 
   @override

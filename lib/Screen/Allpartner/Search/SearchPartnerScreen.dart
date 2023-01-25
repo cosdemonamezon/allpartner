@@ -7,7 +7,10 @@ import '../../../appTheme.dart';
 import '../../Widgets/SearchTextField.dart';
 import '../../app/appController.dart';
 import 'DetailCompany/DetailCustomer.dart';
+import 'Logistic/LogisticPage.dart';
 import 'ProductController.dart';
+import 'Purchase/PurchasePage.dart';
+import 'Scrap/ScrapPage.dart';
 
 class SearchPartnerScreen extends StatefulWidget {
   SearchPartnerScreen({Key? key}) : super(key: key);
@@ -114,7 +117,8 @@ class _SearchPartnerScreenState extends State<SearchPartnerScreen> with TickerPr
               indicatorColor: Colors.blue,
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
               tabs: [
-                Tab(text: 'รายชื่อบริษัท'),
+                // Tab(text: 'รายชื่อบริษัท'),
+                Tab(text: 'รายการบริการ'),
                 Tab(text: 'สินค้า'),
               ],
             ),
@@ -129,139 +133,247 @@ class _SearchPartnerScreenState extends State<SearchPartnerScreen> with TickerPr
           body: TabBarView(
             controller: _tabController,
             children: [
+              // SingleChildScrollView(
+              //   child: Column(
+              //     children: [
+              //       SizedBox(
+              //         height: size.height * 0.02,
+              //       ),
+              //       Padding(
+              //         padding: EdgeInsets.symmetric(horizontal: 10),
+              //         child: SearchTextField(),
+              //       ),
+              //       SizedBox(
+              //         height: 10,
+              //       ),
+              //       Container(
+              //         padding: EdgeInsets.all(15),
+              //         child: controller.compayCustomer.isEmpty
+              //             ? Center(
+              //                 child: CircularProgressIndicator(),
+              //               )
+              //             : ListView.builder(
+              //                 // controller: _controller,
+              //                 shrinkWrap: true,
+              //                 scrollDirection: Axis.vertical,
+              //                 physics: NeverScrollableScrollPhysics(),
+              //                 itemCount: controller.compayCustomer.length,
+              //                 itemBuilder: (_, index) {
+              //                   return Padding(
+              //                     padding: const EdgeInsets.all(5),
+              //                     child: GestureDetector(
+              //                       onTap: () {
+              //                         Navigator.push(
+              //                             context,
+              //                             MaterialPageRoute(
+              //                                 builder: (context) => DetailCustomer(
+              //                                       id: controller.compayCustomer[index].id!,
+              //                                       // name: controller.compayCustomer[index].name!,
+              //                                       // email: controller.compayCustomer[index].email!,
+              //                                       // image: controller.compayCustomer[index].image!,
+              //                                       // phone: controller.compayCustomer[index].phone!,
+              //                                     )));
+              //                       },
+              //                       child: Container(
+              //                         width: size.width,
+              //                         decoration: BoxDecoration(
+              //                           image: DecorationImage(
+              //                             image: AssetImage('assets/images/promotionBG.png'),
+              //                             fit: BoxFit.fill,
+              //                           ),
+              //                           boxShadow: const [
+              //                             BoxShadow(
+              //                                 offset: Offset(0, 2),
+              //                                 color: Color.fromRGBO(0, 78, 179, 0.05),
+              //                                 blurRadius: 10)
+              //                           ],
+              //                         ),
+              //                         child: Padding(
+              //                           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              //                           child: Row(
+              //                             children: [
+              //                               Expanded(
+              //                                   flex: 2,
+              //                                   child: Image.network(
+              //                                     "${controller.compayCustomer[index].image}",
+              //                                     height: size.height / 17,
+              //                                     errorBuilder: (context, error, stackTrace) =>
+              //                                         Image.asset('assets/images/No_Image_Available.jpg'),
+              //                                   )
+              //                                   // : Image.asset(
+              //                                   //     'assets/images/No_Image_Available.jpg'),
+              //                                   ),
+              //                               SizedBox(
+              //                                 width: 10,
+              //                               ),
+              //                               Expanded(
+              //                                 flex: 8,
+              //                                 child: Padding(
+              //                                   padding: const EdgeInsets.symmetric(horizontal: 5),
+              //                                   child: Column(
+              //                                     crossAxisAlignment: CrossAxisAlignment.start,
+              //                                     children: [
+              //                                       Text(
+              //                                         controller.compayCustomer[index].name ?? '',
+              //                                         style: TextStyle(
+              //                                             fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+              //                                       ),
+              //                                       SizedBox(height: 5),
+              //                                       Text(
+              //                                         'เบอร์โทรศัพท์ ${controller.compayCustomer[index].phone ?? ''}',
+              //                                         style: TextStyle(fontSize: appFontSize?.body2),
+              //                                         overflow: TextOverflow.ellipsis,
+              //                                       ),
+              //                                       SizedBox(height: 4),
+              //                                       Text(
+              //                                         'อีเมลล์ ${controller.compayCustomer[index].email ?? ''} ',
+              //                                         style: TextStyle(fontSize: appFontSize?.body2),
+              //                                         overflow: TextOverflow.ellipsis,
+              //                                       ),
+              //                                       SizedBox(height: 4),
+              //                                       // Text(
+              //                                       //   'ลักษณะงาน ${controller.compayCustomer[index].type ?? ''}',
+              //                                       //   style: TextStyle(fontSize: appFontSize?.body2),
+              //                                       //   // overflow: TextOverflow.ellipsis,
+              //                                       // ),
+              //                                       // SizedBox(height: 4),
+              //                                     ],
+              //                                   ),
+              //                                 ),
+              //                               ),
+              //                             ],
+              //                           ),
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   );
+              //                 }),
+              //       ),
+              //       // ListView(
+              //       //   scrollDirection: Axis.vertical,
+              //       //   shrinkWrap: true,
+              //       //   physics: const NeverScrollableScrollPhysics(),
+              //       //   children: companydata
+              //       //       .map((data) => CompaniesList(
+              //       //             companydata: data,
+              //       //             use: true,
+              //       //             press: () {
+              //       //               Navigator.push(
+              //       //                   context,
+              //       //                   MaterialPageRoute(
+              //       //                       builder: (context) => JobCompanyScreen()));
+              //       //             },
+              //       //           ))
+              //       //       .toList(),
+              //       // )
+              //     ],
+              //   ),
+              // ),
               SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: size.height * 0.02,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: SearchTextField(),
-                    ),
                     SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      child: controller.compayCustomer.isEmpty
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : ListView.builder(
-                              // controller: _controller,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: controller.compayCustomer.length,
-                              itemBuilder: (_, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => DetailCustomer(
-                                                    id: controller.compayCustomer[index].id!,
-                                                    // name: controller.compayCustomer[index].name!,
-                                                    // email: controller.compayCustomer[index].email!,
-                                                    // image: controller.compayCustomer[index].image!,
-                                                    // phone: controller.compayCustomer[index].phone!,
-                                                  )));
-                                    },
-                                    child: Container(
-                                      width: size.width,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage('assets/images/promotionBG.png'),
-                                          fit: BoxFit.fill,
-                                        ),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              offset: Offset(0, 2),
-                                              color: Color.fromRGBO(0, 78, 179, 0.05),
-                                              blurRadius: 10)
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 2,
-                                                child: Image.network(
-                                                  "${controller.compayCustomer[index].image}",
-                                                  height: size.height / 17,
-                                                  errorBuilder: (context, error, stackTrace) =>
-                                                      Image.asset('assets/images/No_Image_Available.jpg'),
-                                                )
-                                                // : Image.asset(
-                                                //     'assets/images/No_Image_Available.jpg'),
-                                                ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Expanded(
-                                              flex: 8,
-                                              child: Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      controller.compayCustomer[index].name ?? '',
-                                                      style: TextStyle(
-                                                          fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
-                                                    ),
-                                                    SizedBox(height: 5),
-                                                    Text(
-                                                      'เบอร์โทรศัพท์ ${controller.compayCustomer[index].phone ?? ''}',
-                                                      style: TextStyle(fontSize: appFontSize?.body2),
-                                                      overflow: TextOverflow.ellipsis,
-                                                    ),
-                                                    SizedBox(height: 4),
-                                                    Text(
-                                                      'อีเมลล์ ${controller.compayCustomer[index].email ?? ''} ',
-                                                      style: TextStyle(fontSize: appFontSize?.body2),
-                                                      overflow: TextOverflow.ellipsis,
-                                                    ),
-                                                    SizedBox(height: 4),
-                                                    // Text(
-                                                    //   'ลักษณะงาน ${controller.compayCustomer[index].type ?? ''}',
-                                                    //   style: TextStyle(fontSize: appFontSize?.body2),
-                                                    //   // overflow: TextOverflow.ellipsis,
-                                                    // ),
-                                                    // SizedBox(height: 4),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: 10),
+                    //   child: SearchTextField(),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return LogisticPage();
+                          }));
+                        },
+                        child: Container(
+                          width: size.width,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/promotionBG.png'),
+                              fit: BoxFit.fill,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+                            ],
+                          ),
+                          child: Center(
+                            child: SizedBox(
+                              child: Text(
+                                'Logistic',
+                                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    // ListView(
-                    //   scrollDirection: Axis.vertical,
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   children: companydata
-                    //       .map((data) => CompaniesList(
-                    //             companydata: data,
-                    //             use: true,
-                    //             press: () {
-                    //               Navigator.push(
-                    //                   context,
-                    //                   MaterialPageRoute(
-                    //                       builder: (context) => JobCompanyScreen()));
-                    //             },
-                    //           ))
-                    //       .toList(),
-                    // )
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return ScrapPage();
+                          }));
+                        },
+                        child: Container(
+                          width: size.width,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/promotionBG.png'),
+                              fit: BoxFit.fill,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+                            ],
+                          ),
+                          child: Center(
+                            child: SizedBox(
+                              child: Text(
+                                'Scrap',
+                                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return PurchasePage();
+                          }));
+                        },
+                        child: Container(
+                          width: size.width,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/promotionBG.png'),
+                              fit: BoxFit.fill,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+                            ],
+                          ),
+                          child: Center(
+                            child: SizedBox(
+                              child: Text(
+                                'Purchase',
+                                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
