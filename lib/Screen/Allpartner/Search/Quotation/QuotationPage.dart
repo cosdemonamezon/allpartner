@@ -11,6 +11,7 @@ import '../../../Widgets/ButtonRounded.dart';
 import '../../../Widgets/LoadingDialog.dart';
 import '../../../app/appController.dart';
 import '../../Profile/Widgets/AddTextForm.dart';
+import '../ProductController.dart';
 import '../ProductServicer.dart';
 
 class QuotationPage extends StatefulWidget {
@@ -252,6 +253,9 @@ class _QuotationPageState extends State<QuotationPage> {
                                                       file: _selectedFile!,
                                                     );
                                                     if (mounted) {
+                                                      await context
+                                                          .read<ProductController>()
+                                                          .loadQuotatianLogistic(user.id!);
                                                       LoadingDialog.close(context);
                                                       Navigator.of(context)
                                                         ..pop()
@@ -291,6 +295,9 @@ class _QuotationPageState extends State<QuotationPage> {
                                                       file: _selectedFile!,
                                                     );
                                                     if (mounted) {
+                                                      await context
+                                                          .read<ProductController>()
+                                                          .loadQuotatianScrap(user.id!);
                                                       LoadingDialog.close(context);
                                                       Navigator.of(context)
                                                         ..pop()
@@ -330,6 +337,9 @@ class _QuotationPageState extends State<QuotationPage> {
                                                       file: _selectedFile!,
                                                     );
                                                     if (mounted) {
+                                                      await context
+                                                          .read<ProductController>()
+                                                          .loadQuotatianPurchase(user.id!);
                                                       LoadingDialog.close(context);
                                                       Navigator.of(context)
                                                         ..pop()
