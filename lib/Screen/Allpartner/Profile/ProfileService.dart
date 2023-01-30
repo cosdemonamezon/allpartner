@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -27,13 +26,14 @@ class ProfileService {
     required String postcode,
     required String fax,
     required String type,
-    required List<PlatformFile> image,
+    // required PlatformFile images,
+    required List<PlatformFile> images,
   }) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    final files = image.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final filesList = images.map((image) => MultipartFile.fromFileSync(image.path!)).toList();
     final token = pref.getString('token');
     final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
-    final formData = FormData.fromMap(
+    var formData = FormData.fromMap(
       {
         "user_id": user_id,
         "name": name,
@@ -47,11 +47,11 @@ class ProfileService {
         "postcode": postcode,
         "fax": fax,
         "type": type,
-        'image': files,
+        'images[]': filesList,
       },
     );
     try {
-      final response = await Dio().post('$baseUrl/api/vendor', data: formData, options: Options(headers: headers));
+      var response = await Dio().post('$baseUrl/api/vendor', data: formData, options: Options(headers: headers));
 
       return Vendor.fromJson(response.data['data']);
     } on DioError catch (e) {

@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/appController.dart';
+import 'DetailService/DetailServiceVenderPage.dart';
 import 'VendorPage.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
@@ -137,6 +138,12 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           title: 'รายละเอียดบริษัท',
                           image: 'user',
                           page: VendorPage(),
+                        ),
+                        Divider(color: Colors.grey),
+                        ProfileMenu(
+                          title: 'รายละเอียดบริการ',
+                          image: 'copyright',
+                          page: DetailServiceVenderPage(),
                         ),
                         Divider(color: Colors.grey),
                         ProfileMenu(

@@ -33,6 +33,7 @@ class _VendorPageState extends State<VendorPage> {
   final TextEditingController? fax = TextEditingController();
   // final TextEditingController? type = TextEditingController();
   FilePickerResult? result;
+  // PlatformFile? listFile;
   List<PlatformFile>? listFile;
   final _controller = ScrollController();
   String? _selectedValue;
@@ -76,6 +77,14 @@ class _VendorPageState extends State<VendorPage> {
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
+            title: Text(
+              'รายละเอียดบริษัท',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 16,
+              ),
+            ),
           ),
           body: Form(
             key: profileForm,
@@ -315,6 +324,49 @@ class _VendorPageState extends State<VendorPage> {
 
                 //           return buildFille(file);
                 //         }),
+                // listFile != null ? Center(child: buildFille(listFile!)) : SizedBox.shrink(),
+                // listFile != null
+                //     ? Center(
+                //         child: Container(
+                //           height: size.height * 0.05,
+                //           width: size.width * 0.25,
+                //           color: Colors.redAccent,
+                //           child: InkWell(
+                //             onTap: () async {
+                //               setState(() {
+                //                 listFile = null;
+                //               });
+                //             },
+                //             child: Center(
+                //                 child: Text(
+                //               'ลบไฟล์',
+                //               style: TextStyle(color: Colors.white),
+                //             )),
+                //           ),
+                //         ),
+                //       )
+                //     : Center(
+                //         child: Container(
+                //           height: size.height * 0.05,
+                //           width: size.width * 0.25,
+                //           color: Colors.blueAccent,
+                //           child: InkWell(
+                //             onTap: () async {
+                //               final result = await FilePicker.platform.pickFiles(type: FileType.image);
+                //               setState(() {
+                //                 if (result == null) return;
+
+                //                 listFile = result.files[0];
+                //               });
+                //             },
+                //             child: Center(
+                //                 child: Text(
+                //               'อัพโหลดไฟล์',
+                //               style: TextStyle(color: Colors.white),
+                //             )),
+                //           ),
+                //         ),
+                //       ),
                 listFile != null
                     ? GridView.builder(
                         shrinkWrap: true,
@@ -436,47 +488,47 @@ class _VendorPageState extends State<VendorPage> {
                                               // ),
                                             ),
                                             onPressed: () async {
-                                              // try {
-                                              // LoadingDialog.open(context);
-                                              await ProfileService().setVendor(
-                                                user_id: user!.id.toString(),
-                                                name: name!.text,
-                                                email: email!.text,
-                                                phone: phone.text,
-                                                tax: tax!.text,
-                                                address1: address1!.text,
-                                                address2: address2!.text,
-                                                address3: address3!.text,
-                                                country: country!.text,
-                                                postcode: postcode!.text,
-                                                fax: fax!.text,
-                                                image: listFile!,
-                                                type: _selectedValue!,
-                                              );
-                                              if (mounted) {
-                                                // LoadingDialog.close(context);
-                                                Navigator.of(context)
-                                                  ..pop()
-                                                  ..pop();
+                                              try {
+                                                LoadingDialog.open(context);
+                                                await ProfileService().setVendor(
+                                                  user_id: user!.id.toString(),
+                                                  name: name!.text,
+                                                  email: email!.text,
+                                                  phone: phone.text,
+                                                  tax: tax!.text,
+                                                  address1: address1!.text,
+                                                  address2: address2!.text,
+                                                  address3: address3!.text,
+                                                  country: country!.text,
+                                                  postcode: postcode!.text,
+                                                  fax: fax!.text,
+                                                  images: listFile!,
+                                                  type: _selectedValue!,
+                                                );
+                                                if (mounted) {
+                                                  LoadingDialog.close(context);
+                                                  Navigator.of(context)
+                                                    ..pop()
+                                                    ..pop();
+                                                }
+                                              } catch (e) {
+                                                LoadingDialog.close(context);
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) => AlertDialog(
+                                                    backgroundColor: Colors.blueAccent,
+                                                    title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                    content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                    actions: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                    ],
+                                                  ),
+                                                );
                                               }
-                                              // } catch (e) {
-                                              //   LoadingDialog.close(context);
-                                              //   showDialog(
-                                              //     context: context,
-                                              //     builder: (context) => AlertDialog(
-                                              //       backgroundColor: Colors.blueAccent,
-                                              //       title: Text("Error", style: TextStyle(color: Colors.white)),
-                                              //       content: Text(e.toString(), style: TextStyle(color: Colors.white)),
-                                              //       actions: [
-                                              //         TextButton(
-                                              //             onPressed: () {
-                                              //               Navigator.pop(context);
-                                              //             },
-                                              //             child: Text('OK', style: TextStyle(color: Colors.white)))
-                                              //       ],
-                                              //     ),
-                                              //   );
-                                              // }
                                             },
                                           )
                                         ],
@@ -511,6 +563,8 @@ class _VendorPageState extends State<VendorPage> {
     return InkWell(
       onTap: () => OpenFile.open(file.path),
       child: Container(
+        // width: 200,
+        // height: 200,
         padding: EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -530,7 +584,7 @@ class _VendorPageState extends State<VendorPage> {
             ),
             Text(
               file.name,
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
               overflow: TextOverflow.ellipsis,
             )
           ],

@@ -1,3 +1,4 @@
+import 'package:allpartner/Model/imagesCpmpanie/imagesLogistic.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'logistic.g.dart';
@@ -22,6 +23,9 @@ class Logistic {
     this.end_location,
     this.status,
     this.No,
+    this.expire_hour,
+    this.created_at,
+    this.images,
   });
 
   int? id;
@@ -40,7 +44,10 @@ class Logistic {
   String? end_lon;
   String? end_location;
   String? status;
+  String? expire_hour;
+  DateTime? created_at;
   int? No;
+  List<ImagesLogistic>? images;
 
   factory Logistic.fromJson(Map<String, dynamic> json) => _$LogisticFromJson(json);
 

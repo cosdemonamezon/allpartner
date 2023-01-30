@@ -4,7 +4,11 @@ part 'files.g.dart';
 
 @JsonSerializable()
 class Files {
-  Files({this.id, this.vendor_id, this.image, x});
+  Files({
+    this.id,
+    this.vendor_id,
+    this.image,
+  });
 
   int? id;
   String? vendor_id;

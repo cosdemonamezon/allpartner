@@ -2,6 +2,7 @@ import 'package:allpartner/Screen/Login/WelcomeScreen.dart';
 import 'package:allpartner/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 import 'Screen/Allpartner/Profile/ProfileController.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('th');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

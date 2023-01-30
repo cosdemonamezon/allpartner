@@ -9,7 +9,7 @@ class AppService {
   const AppService();
 
   Future<User> getProfile(String token, String id) async {
-    final url = Uri.parse('$baseUrl/api/user/$id');
+    final url = Uri.parse('$baseUrl/api/get_vendor_by_partner/$id');
 
     final headers = {'Authorization': 'Bearer $token'};
 

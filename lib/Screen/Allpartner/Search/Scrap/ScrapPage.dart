@@ -92,89 +92,92 @@ class _ScrapPageState extends State<ScrapPage> with TickerProviderStateMixin {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: controller.compayCustomer.length,
                               itemBuilder: (_, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScrapPage2(controller.compayCustomer[index].id!)));
-                                    },
-                                    child: Container(
-                                      width: size.width,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage('assets/images/promotionBG.png'),
-                                          fit: BoxFit.fill,
-                                        ),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              offset: Offset(0, 2),
-                                              color: Color.fromRGBO(0, 78, 179, 0.05),
-                                              blurRadius: 10)
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                flex: 2,
-                                                child: Image.network(
-                                                  "${controller.compayCustomer[index].image}",
-                                                  height: size.height / 17,
-                                                  errorBuilder: (context, error, stackTrace) =>
-                                                      Image.asset('assets/images/No_Image_Available.jpg'),
-                                                )
-                                                // : Image.asset(
-                                                //     'assets/images/No_Image_Available.jpg'),
-                                                ),
-                                            SizedBox(
-                                              width: 10,
+                                return controller.compayCustomer[index].status != 'Yes'
+                                    ? SizedBox.shrink()
+                                    : Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailScrapPage2(controller.compayCustomer[index].id!)));
+                                          },
+                                          child: Container(
+                                            width: size.width,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage('assets/images/promotionBG.png'),
+                                                fit: BoxFit.fill,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    offset: Offset(0, 2),
+                                                    color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                    blurRadius: 10)
+                                              ],
                                             ),
-                                            Expanded(
-                                              flex: 8,
-                                              child: Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      controller.compayCustomer[index].name ?? '',
-                                                      style: TextStyle(
-                                                          fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                      flex: 2,
+                                                      child: Image.network(
+                                                        "${controller.compayCustomer[index].image}",
+                                                        height: size.height / 17,
+                                                        errorBuilder: (context, error, stackTrace) =>
+                                                            Image.asset('assets/images/No_Image_Available.jpg'),
+                                                      )
+                                                      // : Image.asset(
+                                                      //     'assets/images/No_Image_Available.jpg'),
+                                                      ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Expanded(
+                                                    flex: 8,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            controller.compayCustomer[index].name ?? '',
+                                                            style: TextStyle(
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: appFontSize?.body),
+                                                          ),
+                                                          SizedBox(height: 5),
+                                                          Text(
+                                                            'เบอร์โทรศัพท์ ${controller.compayCustomer[index].phone ?? ''}',
+                                                            style: TextStyle(fontSize: appFontSize?.body2),
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          Text(
+                                                            'อีเมลล์ ${controller.compayCustomer[index].email ?? ''} ',
+                                                            style: TextStyle(fontSize: appFontSize?.body2),
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          // Text(
+                                                          //   'ลักษณะงาน ${controller.compayCustomer[index].type ?? ''}',
+                                                          //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                          //   // overflow: TextOverflow.ellipsis,
+                                                          // ),
+                                                          // SizedBox(height: 4),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    SizedBox(height: 5),
-                                                    Text(
-                                                      'เบอร์โทรศัพท์ ${controller.compayCustomer[index].phone ?? ''}',
-                                                      style: TextStyle(fontSize: appFontSize?.body2),
-                                                      overflow: TextOverflow.ellipsis,
-                                                    ),
-                                                    SizedBox(height: 4),
-                                                    Text(
-                                                      'อีเมลล์ ${controller.compayCustomer[index].email ?? ''} ',
-                                                      style: TextStyle(fontSize: appFontSize?.body2),
-                                                      overflow: TextOverflow.ellipsis,
-                                                    ),
-                                                    SizedBox(height: 4),
-                                                    // Text(
-                                                    //   'ลักษณะงาน ${controller.compayCustomer[index].type ?? ''}',
-                                                    //   style: TextStyle(fontSize: appFontSize?.body2),
-                                                    //   // overflow: TextOverflow.ellipsis,
-                                                    // ),
-                                                    // SizedBox(height: 4),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                );
+                                      );
                               }),
                     ),
                   ],
@@ -329,7 +332,8 @@ class _ScrapPageState extends State<ScrapPage> with TickerProviderStateMixin {
                     Container(
                       padding: EdgeInsets.all(15),
                       child: controller.quotationScrap?.qoutations?.isEmpty ?? true
-                          ? Center(child: CircularProgressIndicator())
+                          // ? Center(child: CircularProgressIndicator())
+                          ? SizedBox.shrink()
                           : ListView.builder(
                               // controller: _controller,
                               shrinkWrap: true,
@@ -467,7 +471,8 @@ class _ScrapPageState extends State<ScrapPage> with TickerProviderStateMixin {
                     Container(
                       padding: EdgeInsets.all(15),
                       child: controller.quotationScrap?.qoutations?.isEmpty ?? true
-                          ? Center(child: CircularProgressIndicator())
+                          // ? Center(child: CircularProgressIndicator())
+                          ? SizedBox.shrink()
                           : ListView.builder(
                               // controller: _controller,
                               shrinkWrap: true,
