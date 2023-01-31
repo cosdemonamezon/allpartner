@@ -70,10 +70,10 @@ class _DetailScrapPage2State extends State<DetailScrapPage2> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: controller.scrapCompany[0].scraps!.length,
                         itemBuilder: (_, index) {
+                          final start = controller.scrapCompany[0].scraps?[index].created_at;
+                          final end = controller.scrapCompany[0].scraps?[index].expire_hour ?? '0';
                           late int endTime =
-                              controller.puchaseCompany[0].puchases![index].created_at!.millisecondsSinceEpoch +
-                                  Duration(hours: int.parse(controller.puchaseCompany[0].puchases![index].expire_hour!))
-                                      .inMilliseconds;
+                              start!.millisecondsSinceEpoch + Duration(hours: int.parse(end)).inMilliseconds;
                           _controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
                           // if (index < controller.logisticCompany.length) {
                           return CountdownTimer(

@@ -100,6 +100,19 @@ class _DetailLogisticPageState extends State<DetailLogisticPage> {
                       ),
                       CountdownTimer(
                         controller: controller,
+                        widgetBuilder: (_, CurrentRemainingTime? time) {
+                          if (time == null) {
+                            return Text('หมดเวลาในการยืน');
+                          }
+                          return Text(
+                            'วัน: ${time.days ?? '-'}  ชั่วโมง: ${time.hours ?? '-'}  นาที: ${time.min ?? '-'}  วินาที: ${time.sec ?? '-'} ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
+                          );
+                        },
+                        // endWidget: Text('หมดเวลาในการยืน'),
                         textStyle: TextStyle(
                           fontSize: 30,
                           color: Colors.black,
@@ -151,13 +164,11 @@ class _DetailLogisticPageState extends State<DetailLogisticPage> {
                       Divider(
                         thickness: 3,
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05,
-                      ),
                       widget.images!.isEmpty
                           ? SizedBox.shrink()
                           : GridView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               // controller: _controller,
                               padding: EdgeInsets.all(15),
                               scrollDirection: Axis.vertical,

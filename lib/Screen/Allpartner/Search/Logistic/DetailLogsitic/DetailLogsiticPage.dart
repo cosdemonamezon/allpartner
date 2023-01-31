@@ -53,7 +53,9 @@ class _DetailLogsiticPage2State extends State<DetailLogsiticPage2> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: SearchTextField(),
+                child: SearchTextField(
+                  onChanged: (newValue) {},
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -69,10 +71,10 @@ class _DetailLogsiticPage2State extends State<DetailLogsiticPage2> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: controller.logisticCompany[0].logistics!.length,
                         itemBuilder: (_, index) {
-                          late int endTime = controller
-                                  .logisticCompany[0].logistics![index].created_at!.millisecondsSinceEpoch +
-                              Duration(hours: int.parse(controller.logisticCompany[0].logistics![index].expire_hour!))
-                                  .inMilliseconds;
+                          final start = controller.logisticCompany[0].logistics?[index].created_at;
+                          final end = controller.logisticCompany[0].logistics?[index].expire_hour ?? '0';
+                          late int endTime =
+                              start!.millisecondsSinceEpoch + Duration(hours: int.parse(end)).inMilliseconds;
                           _controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
                           // if (index < controller.logisticCompany.length) {
                           return CountdownTimer(
