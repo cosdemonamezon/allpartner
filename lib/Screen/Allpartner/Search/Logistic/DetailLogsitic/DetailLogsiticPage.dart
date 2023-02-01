@@ -109,8 +109,8 @@ class _DetailLogsiticPage2State extends State<DetailLogsiticPage2> {
                                                           image: controller.logisticCompany[0].image,
                                                           end: controller
                                                               .logisticCompany[0].logistics![index].expire_hour!,
-                                                          start:
-                                                              controller.puchaseCompany[0].puchases![index].created_at!,
+                                                          start: controller
+                                                              .logisticCompany[0].logistics![index].created_at!,
                                                           images:
                                                               controller.logisticCompany[0].logistics![index].images,
                                                         )));

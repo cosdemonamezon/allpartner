@@ -98,33 +98,35 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                     ),
                   ),
                   SizedBox(
-                    child: ListView.builder(
-                        // controller: _controller,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.detailScrap.length,
-                        itemBuilder: (_, index) {
-                          return CheckboxListTile(
-                            controlAffinity: ListTileControlAffinity.leading,
-                            value: controller.detailScrap[index].isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                controller.detailScrap[index].isChecked = value!;
-                                print(controller.detailScrap[index].isChecked);
-                                if (controller.detailScrap[index].isChecked == true) {
-                                  // 'รถกระบะ';
-                                  ListChacked.add(controller.detailScrap[index].name!);
-                                  print(ListChacked);
-                                } else if (controller.detailScrap[index].isChecked == false) {
-                                  ListChacked.remove(controller.detailScrap[index].name!);
-                                  print(ListChacked);
-                                }
-                              });
-                            },
-                            title: Text(controller.detailScrap[index].name!),
-                          );
-                        }),
+                    child: controller.detailScrap.isEmpty
+                        ? Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            // controller: _controller,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: controller.detailScrap.length,
+                            itemBuilder: (_, index) {
+                              return CheckboxListTile(
+                                controlAffinity: ListTileControlAffinity.leading,
+                                value: controller.detailScrap[index].isChecked,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    controller.detailScrap[index].isChecked = value!;
+                                    print(controller.detailScrap[index].isChecked);
+                                    if (controller.detailScrap[index].isChecked == true) {
+                                      // 'รถกระบะ';
+                                      ListChacked.add(controller.detailScrap[index].name!);
+                                      print(ListChacked);
+                                    } else if (controller.detailScrap[index].isChecked == false) {
+                                      ListChacked.remove(controller.detailScrap[index].name!);
+                                      print(ListChacked);
+                                    }
+                                  });
+                                },
+                                title: Text(controller.detailScrap[index].name!),
+                              );
+                            }),
                   ),
                   // SizedBox(
                   //   child: GridView.builder(
@@ -411,33 +413,35 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                     ),
                   ),
                   SizedBox(
-                    child: ListView.builder(
-                        // controller: _controller,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.detailLogistic.length,
-                        itemBuilder: (_, index) {
-                          return CheckboxListTile(
-                            controlAffinity: ListTileControlAffinity.leading,
-                            value: controller.detailLogistic[index].isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                controller.detailLogistic[index].isChecked = value!;
-                                print(controller.detailLogistic[index].isChecked);
-                                if (controller.detailLogistic[index].isChecked == true) {
-                                  // 'รถกระบะ';
-                                  ListChacked.add(controller.detailLogistic[index].name!);
-                                  print(ListChacked);
-                                } else if (controller.detailLogistic[index].isChecked == false) {
-                                  ListChacked.remove(controller.detailLogistic[index].name!);
-                                  print(ListChacked);
-                                }
-                              });
-                            },
-                            title: Text(controller.detailLogistic[index].name!),
-                          );
-                        }),
+                    child: controller.detailLogistic.isEmpty
+                        ? Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            // controller: _controller,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: controller.detailLogistic.length,
+                            itemBuilder: (_, index) {
+                              return CheckboxListTile(
+                                controlAffinity: ListTileControlAffinity.leading,
+                                value: controller.detailLogistic[index].isChecked,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    controller.detailLogistic[index].isChecked = value!;
+                                    print(controller.detailLogistic[index].isChecked);
+                                    if (controller.detailLogistic[index].isChecked == true) {
+                                      // 'รถกระบะ';
+                                      ListChacked.add(controller.detailLogistic[index].name!);
+                                      print(ListChacked);
+                                    } else if (controller.detailLogistic[index].isChecked == false) {
+                                      ListChacked.remove(controller.detailLogistic[index].name!);
+                                      print(ListChacked);
+                                    }
+                                  });
+                                },
+                                title: Text(controller.detailLogistic[index].name!),
+                              );
+                            }),
                   ),
                   // SizedBox(
                   //   child: ListView(
@@ -691,33 +695,35 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                     ),
                   ),
                   SizedBox(
-                    child: ListView.builder(
-                        // controller: _controller,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.detailPurchase.length,
-                        itemBuilder: (_, index) {
-                          return CheckboxListTile(
-                            controlAffinity: ListTileControlAffinity.leading,
-                            value: controller.detailPurchase[index].isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                controller.detailPurchase[index].isChecked = value!;
-                                print(controller.detailPurchase[index].isChecked);
-                                if (controller.detailPurchase[index].isChecked == true) {
-                                  // 'รถกระบะ';
-                                  ListChacked.add(controller.detailPurchase[index].name!);
-                                  print(ListChacked);
-                                } else if (controller.detailPurchase[index].isChecked == false) {
-                                  ListChacked.remove(controller.detailPurchase[index].name!);
-                                  print(ListChacked);
-                                }
-                              });
-                            },
-                            title: Text(controller.detailPurchase[index].name!),
-                          );
-                        }),
+                    child: controller.detailPurchase.isEmpty
+                        ? Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            // controller: _controller,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: controller.detailPurchase.length,
+                            itemBuilder: (_, index) {
+                              return CheckboxListTile(
+                                controlAffinity: ListTileControlAffinity.leading,
+                                value: controller.detailPurchase[index].isChecked,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    controller.detailPurchase[index].isChecked = value!;
+                                    print(controller.detailPurchase[index].isChecked);
+                                    if (controller.detailPurchase[index].isChecked == true) {
+                                      // 'รถกระบะ';
+                                      ListChacked.add(controller.detailPurchase[index].name!);
+                                      print(ListChacked);
+                                    } else if (controller.detailPurchase[index].isChecked == false) {
+                                      ListChacked.remove(controller.detailPurchase[index].name!);
+                                      print(ListChacked);
+                                    }
+                                  });
+                                },
+                                title: Text(controller.detailPurchase[index].name!),
+                              );
+                            }),
                   ),
                   // SizedBox(
                   //   child: ListView(
