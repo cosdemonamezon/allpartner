@@ -52,7 +52,9 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
   bool isChecked35 = false;
   bool isChecked36 = false;
 
-  List<String> ListChacked = [];
+  List<String> ListChackedScrap = [];
+  List<String> ListChackedLogistic = [];
+  List<String> ListChackedPurchase = [];
 
   @override
   void initState() {
@@ -116,11 +118,11 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                                     print(controller.detailScrap[index].isChecked);
                                     if (controller.detailScrap[index].isChecked == true) {
                                       // 'รถกระบะ';
-                                      ListChacked.add(controller.detailScrap[index].name!);
-                                      print(ListChacked);
+                                      ListChackedScrap.add(controller.detailScrap[index].name!);
+                                      print(ListChackedScrap);
                                     } else if (controller.detailScrap[index].isChecked == false) {
-                                      ListChacked.remove(controller.detailScrap[index].name!);
-                                      print(ListChacked);
+                                      ListChackedScrap.remove(controller.detailScrap[index].name!);
+                                      print(ListChackedScrap);
                                     }
                                   });
                                 },
@@ -431,11 +433,11 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                                     print(controller.detailLogistic[index].isChecked);
                                     if (controller.detailLogistic[index].isChecked == true) {
                                       // 'รถกระบะ';
-                                      ListChacked.add(controller.detailLogistic[index].name!);
-                                      print(ListChacked);
+                                      ListChackedLogistic.add(controller.detailLogistic[index].name!);
+                                      print(ListChackedLogistic);
                                     } else if (controller.detailLogistic[index].isChecked == false) {
-                                      ListChacked.remove(controller.detailLogistic[index].name!);
-                                      print(ListChacked);
+                                      ListChackedLogistic.remove(controller.detailLogistic[index].name!);
+                                      print(ListChackedLogistic);
                                     }
                                   });
                                 },
@@ -713,11 +715,11 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                                     print(controller.detailPurchase[index].isChecked);
                                     if (controller.detailPurchase[index].isChecked == true) {
                                       // 'รถกระบะ';
-                                      ListChacked.add(controller.detailPurchase[index].name!);
-                                      print(ListChacked);
+                                      ListChackedPurchase.add(controller.detailPurchase[index].name!);
+                                      print(ListChackedPurchase);
                                     } else if (controller.detailPurchase[index].isChecked == false) {
-                                      ListChacked.remove(controller.detailPurchase[index].name!);
-                                      print(ListChacked);
+                                      ListChackedPurchase.remove(controller.detailPurchase[index].name!);
+                                      print(ListChackedPurchase);
                                     }
                                   });
                                 },

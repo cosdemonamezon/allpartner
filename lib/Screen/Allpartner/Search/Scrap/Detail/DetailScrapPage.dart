@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../Quotation/QuotationPage.dart';
 
@@ -174,7 +175,13 @@ class _DetailScrapPageState extends State<DetailScrapPage> {
                               itemCount: widget.images!.length,
                               itemBuilder: (context, index) {
                                 return widget.images![index].image != null
-                                    ? Image.network(widget.images![index].image!)
+                                    ? InkWell(
+                                        onTap: () {
+                                          final url = widget.images![index].image;
+
+                                          openBrowserURL(url: url!, inApp: false);
+                                        },
+                                        child: Image.network(widget.images![index].image!))
                                     : Image.asset('assets/images/No_Image_Available.jpg');
                               }),
                       Text(
@@ -297,5 +304,22 @@ class _DetailScrapPageState extends State<DetailScrapPage> {
         ),
       ),
     );
+  }
+
+  Future openBrowserURL({
+    required String url,
+    bool inApp = false,
+  }) async {
+    // ignore: deprecated_member_use
+    if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
+      await launch(
+        url,
+        forceSafariVC: inApp,
+        forceWebView: inApp,
+        enableJavaScript: true,
+        enableDomStorage: true,
+      );
+    }
   }
 }
