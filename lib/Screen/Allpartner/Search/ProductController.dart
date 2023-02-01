@@ -57,7 +57,7 @@ class ProductController extends ChangeNotifier {
     logisticCompany.clear();
     final _loadPositionL = await ProductService.getLogisticCustomer(companyId: id);
     logisticCompany.addAll(_loadPositionL);
-    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
+    logisticCompany[0].logistics!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }
 
@@ -68,7 +68,8 @@ class ProductController extends ChangeNotifier {
     scrapCompany.clear();
     final _loadPositionS = await ProductService.getScrapCustomer(companyId: id);
     scrapCompany.addAll(_loadPositionS);
-    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
+    scrapCompany[0].scraps!.sort((a, b) => b.id!.compareTo(a.id!));
+
     notifyListeners();
   }
 
@@ -79,7 +80,7 @@ class ProductController extends ChangeNotifier {
     puchaseCompany.clear();
     final _loadPositionP = await ProductService.getPurchaseCustomer(companyId: id);
     puchaseCompany.addAll(_loadPositionP);
-    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
+    puchaseCompany[0].puchases!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }
 
@@ -92,6 +93,7 @@ class ProductController extends ChangeNotifier {
     pref = await SharedPreferences.getInstance();
     token = pref?.getString('token');
     quotationPuchase = await ProductService.getQuotatianPurchase(userId: id);
+    quotationPuchase!.qoutations!.sort((a, b) => b.id!.compareTo(a.id!));
 
     notifyListeners();
   }
@@ -104,7 +106,7 @@ class ProductController extends ChangeNotifier {
     pref = await SharedPreferences.getInstance();
     token = pref?.getString('token');
     quotationLogistic = await ProductService.getQuotatianLogistic(userId: id);
-
+    quotationLogistic!.qoutations!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }
 
@@ -116,6 +118,7 @@ class ProductController extends ChangeNotifier {
     pref = await SharedPreferences.getInstance();
     token = pref?.getString('token');
     quotationScrap = await ProductService.getQuotatianScrap(userId: id);
+    quotationScrap!.qoutations!.sort((a, b) => b.id!.compareTo(a.id!));
 
     notifyListeners();
   }
