@@ -84,7 +84,7 @@ class _SearchPartnerScreenState extends State<SearchPartnerScreen> with TickerPr
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 1, vsync: this);
     _loadItem();
   }
 
@@ -100,7 +100,7 @@ class _SearchPartnerScreenState extends State<SearchPartnerScreen> with TickerPr
     final appFontSize = AppFontSize.of(context);
     return Consumer<ProductController>(
       builder: (context, controller, child) => DefaultTabController(
-        length: 2,
+        length: 1,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -118,8 +118,8 @@ class _SearchPartnerScreenState extends State<SearchPartnerScreen> with TickerPr
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
               tabs: [
                 // Tab(text: 'รายชื่อบริษัท'),
-                Tab(text: 'รายการบริการ'),
-                Tab(text: 'สินค้า'),
+                Tab(text: ''),
+                // Tab(text: 'สินค้า'),
               ],
             ),
             // leading: IconButton(
@@ -377,35 +377,35 @@ class _SearchPartnerScreenState extends State<SearchPartnerScreen> with TickerPr
                   ],
                 ),
               ),
-              //Tap2
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // buildSearchBar(),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: productlist
-                          .map((e) => CardList(
-                                list: e,
-                              ))
-                          .toList(),
-                    ),
-                    // CardList(list: productlist),
-                  ],
-                ),
-              ),
+              // //Tap2
+              // SingleChildScrollView(
+              //   child: Column(
+              //     children: [
+              //       // buildSearchBar(),
+              //       ListView(
+              //         scrollDirection: Axis.vertical,
+              //         shrinkWrap: true,
+              //         physics: const NeverScrollableScrollPhysics(),
+              //         children: productlist
+              //             .map((e) => CardList(
+              //                   list: e,
+              //                 ))
+              //             .toList(),
+              //       ),
+              //       // CardList(list: productlist),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
 
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AddProductPartner()));
-            },
-            backgroundColor: Colors.blue,
-            child: const Icon(Icons.add),
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     Navigator.push(context, MaterialPageRoute(builder: (context) => AddProductPartner()));
+          //   },
+          //   backgroundColor: Colors.blue,
+          //   child: const Icon(Icons.add),
+          // ),
         ),
       ),
     );

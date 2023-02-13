@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Model/DetailVendor/detailVendor.dart';
 import '../../../Model/user.dart';
+import '../../../Model/venderService.dart';
 import '../../../Model/vendor.dart';
 import '../../../constants/constants.dart';
 
@@ -133,6 +134,51 @@ class ProfileService {
       final list = data['data'] as List;
 
       return list.map((e) => DetailVendor.fromJson(e)).toList();
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  //เพิ่มความต้องการ Vender
+  Future<Vendor?> setServiceVender({
+    required int vendor_id,
+    required List<VenderService> services,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/vendor_services');
+    final response = await http.post(url,
+        body: jsonEncode({
+          "vendor_id": vendor_id,
+          "services": services,
+        }),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+        });
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(response.body);
+      return Vendor.fromJson(responseString["data"]);
+    } else {
+      final responseString = jsonDecode(response.body);
+      throw responseString['message'];
+    }
+  }
+
+  //โหลดความต้องการ Vender
+  static Future<Vendor?> getServiceVendor({required int vendorId}) async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/vendor/$vendorId');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      return Vendor.fromJson(data['data']);
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);

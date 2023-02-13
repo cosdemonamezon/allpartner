@@ -1,11 +1,15 @@
+import 'dart:developer';
+
+import 'package:allpartner/Screen/Allpartner/Profile/ProfileService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../Model/venderService.dart';
 import '../../../Widgets/ButtonRounded.dart';
 import '../../../Widgets/LoadingDialog.dart';
+import '../../../app/appController.dart';
 import '../ProfileController.dart';
-import '../Widgets/CheckBox.dart';
 
 class AddDetailServiceVenderPage extends StatefulWidget {
   const AddDetailServiceVenderPage({super.key});
@@ -13,6 +17,16 @@ class AddDetailServiceVenderPage extends StatefulWidget {
   @override
   State<AddDetailServiceVenderPage> createState() => _AddDetailServiceVenderPageState();
 }
+
+// class VenderService {
+//   final int service_id;
+//   final String service_type;
+
+//   VenderService({
+//     required this.service_type,
+//     required this.service_id,
+//   });
+// }
 
 class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage> {
   // bool isChecked1 = false;
@@ -52,9 +66,9 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
   // bool isChecked35 = false;
   // bool isChecked36 = false;
 
-  List<String> ListChackedScrap = [];
-  List<String> ListChackedLogistic = [];
-  List<String> ListChackedPurchase = [];
+  List<VenderService> ListChacked = [];
+  // List<VenderService> ListChackedLogistic = [];
+  // List<VenderService> ListChacked = [];
 
   @override
   void initState() {
@@ -67,9 +81,64 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
     await context.read<ProfileController>().loadDetailVendorScrap();
     await context.read<ProfileController>().loadDetailVendorLogistic();
     await context.read<ProfileController>().loadDetailVendorPurchase();
+    await context.read<AppController>().initialize();
+    final vendor = context.read<AppController>().user!.partner_detail!.id;
+    await context.read<ProfileController>().vendorDetailService(vendor!);
+    // Scrap
+    final allScrap = context.read<ProfileController>().detailScrap;
+    final vendorScrap = context.read<ProfileController>().vendorService!.scrap_services;
+    final Scrapselected = vendorScrap!.where((element) => allScrap.contains(element.service_id));
+    for (var scrapDetail in vendorScrap) {
+      for (var scrap in allScrap) {
+        print("${scrapDetail.service_id} = ${scrap.id}");
+        if (scrapDetail.service_id == scrap.id.toString()) {
+          final dataScrap = VenderService(service_type: 'scrap', service_id: int.parse(scrapDetail.service_id!));
+          setState(() {
+            scrap.isChecked = true;
+            ListChacked.add(dataScrap);
+          });
+        }
+      }
+    }
+    // // Logistic
+    final alllogistic = context.read<ProfileController>().detailLogistic;
+    final vendorlogistic = context.read<ProfileController>().vendorService!.logistic_services;
+    final logisticselected = vendorlogistic!.where((element) => alllogistic.contains(element.service_id));
+    for (var logisticDetail in vendorlogistic) {
+      for (var logistic in alllogistic) {
+        print("${logisticDetail.service_id} = ${logistic.id}");
+        if (logisticDetail.service_id == logistic.id.toString()) {
+          final datalogistic =
+              VenderService(service_type: 'logistic', service_id: int.parse(logisticDetail.service_id!));
+          print("object");
+          setState(() {
+            logistic.isChecked = true;
+            ListChacked.add(datalogistic);
+          });
+        }
+      }
+    }
+    // Purchase
+    final allpurchase = context.read<ProfileController>().detailPurchase;
+    final vendorpurchase = context.read<ProfileController>().vendorService!.purchase_services;
+    final purchaseselected = vendorpurchase!.where((element) => allpurchase.contains(element.service_id));
+    for (var purchaseDetail in vendorpurchase) {
+      for (var purchase in allpurchase) {
+        print("${purchaseDetail.service_id} = ${purchase.id}");
+        if (purchaseDetail.service_id == purchase.id.toString()) {
+          final datapurchase =
+              VenderService(service_type: 'purchase', service_id: int.parse(purchaseDetail.service_id!));
+          setState(() {
+            purchase.isChecked = true;
+            ListChacked.add(datapurchase);
+          });
+        }
+      }
+    }
   }
 
   Widget build(BuildContext context) {
+    final user = context.read<AppController>().user;
     final size = MediaQuery.of(context).size;
     return Consumer<ProfileController>(
       builder: (context, controller, child) => Scaffold(
@@ -113,16 +182,23 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                                 controlAffinity: ListTileControlAffinity.leading,
                                 value: controller.detailScrap[index].isChecked,
                                 onChanged: (bool? value) {
+                                  final dataScrap = VenderService(
+                                      service_type: 'scrap', service_id: controller.detailScrap[index].id!);
                                   setState(() {
                                     controller.detailScrap[index].isChecked = value!;
                                     print(controller.detailScrap[index].isChecked);
-                                    if (controller.detailScrap[index].isChecked == true) {
+                                    if (value) {
                                       // 'รถกระบะ';
-                                      ListChackedScrap.add(controller.detailScrap[index].name!);
-                                      print(ListChackedScrap);
-                                    } else if (controller.detailScrap[index].isChecked == false) {
-                                      ListChackedScrap.remove(controller.detailScrap[index].name!);
-                                      print(ListChackedScrap);
+                                      ListChacked.add(dataScrap);
+                                      inspect(ListChacked);
+                                    } else {
+                                      // ListChacked.remove(controller.detailScrap[index].name!);
+                                      ListChacked.removeWhere(
+                                        (element) =>
+                                            element.service_id == dataScrap.service_id &&
+                                            element.service_type == 'scrap',
+                                      );
+                                      inspect(ListChacked);
                                     }
                                   });
                                 },
@@ -428,16 +504,23 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                                 controlAffinity: ListTileControlAffinity.leading,
                                 value: controller.detailLogistic[index].isChecked,
                                 onChanged: (bool? value) {
+                                  final dataLogistic = VenderService(
+                                      service_type: 'logistic', service_id: controller.detailLogistic[index].id!);
                                   setState(() {
                                     controller.detailLogistic[index].isChecked = value!;
                                     print(controller.detailLogistic[index].isChecked);
-                                    if (controller.detailLogistic[index].isChecked == true) {
+                                    if (value) {
                                       // 'รถกระบะ';
-                                      ListChackedLogistic.add(controller.detailLogistic[index].name!);
-                                      print(ListChackedLogistic);
-                                    } else if (controller.detailLogistic[index].isChecked == false) {
-                                      ListChackedLogistic.remove(controller.detailLogistic[index].name!);
-                                      print(ListChackedLogistic);
+                                      ListChacked.add(dataLogistic);
+                                      inspect(ListChacked);
+                                    } else {
+                                      // ListChacked.removeAt(index);
+                                      ListChacked.removeWhere(
+                                        (element) =>
+                                            element.service_id == dataLogistic.service_id &&
+                                            element.service_type == 'logistic',
+                                      );
+                                      inspect(ListChacked);
                                     }
                                   });
                                 },
@@ -710,16 +793,26 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                                 controlAffinity: ListTileControlAffinity.leading,
                                 value: controller.detailPurchase[index].isChecked,
                                 onChanged: (bool? value) {
+                                  print(value);
+                                  final dataPurchase = VenderService(
+                                      service_type: 'purchase', service_id: controller.detailPurchase[index].id!);
                                   setState(() {
                                     controller.detailPurchase[index].isChecked = value!;
                                     print(controller.detailPurchase[index].isChecked);
-                                    if (controller.detailPurchase[index].isChecked == true) {
+                                    if (value) {
                                       // 'รถกระบะ';
-                                      ListChackedPurchase.add(controller.detailPurchase[index].name!);
-                                      print(ListChackedPurchase);
-                                    } else if (controller.detailPurchase[index].isChecked == false) {
-                                      ListChackedPurchase.remove(controller.detailPurchase[index].name!);
-                                      print(ListChackedPurchase);
+
+                                      ListChacked.add(dataPurchase);
+                                      inspect(ListChacked);
+                                    } else {
+                                      // ListChacked.remove(controller.detailPurchase[index].name!);
+                                      // ListChacked.removeAt(index);
+                                      ListChacked.removeWhere(
+                                        (element) =>
+                                            element.service_id == dataPurchase.service_id &&
+                                            element.service_type == 'purchase',
+                                      );
+                                      inspect(ListChacked);
                                     }
                                   });
                                 },
@@ -998,31 +1091,37 @@ class _AddDetailServiceVenderPageState extends State<AddDetailServiceVenderPage>
                                 'ตกลง',
                               ),
                               onPressed: () async {
-                                // try {
-                                // if (mounted) {
-                                //   LoadingDialog.close(context);
-                                Navigator.of(context)
-                                  ..pop()
-                                  ..pop();
-                                // }
-                                // } catch (e) {
-                                //   LoadingDialog.close(context);
-                                //   showDialog(
-                                //     context: context,
-                                //     builder: (context) => AlertDialog(
-                                //       backgroundColor: Colors.blueAccent,
-                                //       title: Text("Error", style: TextStyle(color: Colors.white)),
-                                //       content: Text(e.toString(), style: TextStyle(color: Colors.white)),
-                                //       actions: [
-                                //         TextButton(
-                                //             onPressed: () {
-                                //               Navigator.pop(context);
-                                //             },
-                                //             child: Text('OK', style: TextStyle(color: Colors.white)))
-                                //       ],
-                                //     ),
-                                //   );
-                                // }
+                                try {
+                                  LoadingDialog.open(context);
+                                  await ProfileService().setServiceVender(
+                                    vendor_id: user!.partner_detail!.id!,
+                                    services: ListChacked,
+                                  );
+                                  await context.read<ProfileController>().vendorDetailService(user.partner_detail!.id!);
+                                  if (mounted) {
+                                    LoadingDialog.close(context);
+                                    Navigator.of(context)
+                                      ..pop()
+                                      ..pop();
+                                  }
+                                } catch (e) {
+                                  LoadingDialog.close(context);
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      backgroundColor: Colors.blueAccent,
+                                      title: Text("Error", style: TextStyle(color: Colors.white)),
+                                      content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('OK', style: TextStyle(color: Colors.white)))
+                                      ],
+                                    ),
+                                  );
+                                }
                               },
                             )
                           ],

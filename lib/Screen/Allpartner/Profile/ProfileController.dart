@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Model/DetailVendor/detailVendor.dart';
 import '../../../Model/user.dart';
+import '../../../Model/vendor.dart';
 import 'ProfileService.dart';
 
 class ProfileController extends ChangeNotifier {
@@ -15,6 +16,7 @@ class ProfileController extends ChangeNotifier {
   List<DetailVendor> detailScrap = [];
   List<DetailVendor> detailLogistic = [];
   List<DetailVendor> detailPurchase = [];
+  Vendor? vendorService;
 
   // DetailVendor
   Future<void> vendorlUser(
@@ -52,6 +54,18 @@ class ProfileController extends ChangeNotifier {
     final _loadPositionS = await ProfileService.getVendorPurchase();
     detailPurchase.addAll(_loadPositionS);
     // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
+    notifyListeners();
+  }
+
+  // DetailServiceVendor
+  Future<void> vendorDetailService(
+    int id,
+  ) async {
+    vendorService = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    vendorService = await ProfileService.getServiceVendor(vendorId: id);
+
     notifyListeners();
   }
 }

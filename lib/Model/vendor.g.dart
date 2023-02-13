@@ -20,6 +20,15 @@ Vendor _$VendorFromJson(Map<String, dynamic> json) => Vendor(
       fax: json['fax'] as String?,
       type: json['type'] as String?,
       status: json['status'] as String?,
+      scrap_services: (json['scrap_services'] as List<dynamic>?)
+          ?.map((e) => VenderServices.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      logistic_services: (json['logistic_services'] as List<dynamic>?)
+          ?.map((e) => VenderServices.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      purchase_services: (json['purchase_services'] as List<dynamic>?)
+          ?.map((e) => VenderServices.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$VendorToJson(Vendor instance) => <String, dynamic>{
@@ -36,4 +45,7 @@ Map<String, dynamic> _$VendorToJson(Vendor instance) => <String, dynamic>{
       'fax': instance.fax,
       'type': instance.type,
       'status': instance.status,
+      'scrap_services': instance.scrap_services,
+      'logistic_services': instance.logistic_services,
+      'purchase_services': instance.purchase_services,
     };

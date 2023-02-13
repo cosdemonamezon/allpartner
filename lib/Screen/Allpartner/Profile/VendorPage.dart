@@ -120,7 +120,7 @@ class _VendorPageState extends State<VendorPage> {
                                     ),
                                   ))
                               .toList(),
-                          isExpanded: false,
+                          // isExpanded: false,
                           value: _selectedValue,
                           onChanged: (String? value) async {
                             setState(() {

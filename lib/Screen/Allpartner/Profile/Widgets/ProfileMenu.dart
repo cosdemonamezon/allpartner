@@ -1,4 +1,3 @@
-
 import 'package:allpartner/appTheme.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +5,7 @@ class ProfileMenu extends StatelessWidget {
   final String title;
   final String image;
   final dynamic page;
-  const ProfileMenu(
-      {Key? key, required this.title, required this.image, this.page})
-      : super(key: key);
+  const ProfileMenu({Key? key, required this.title, required this.image, this.page}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +19,14 @@ class ProfileMenu extends StatelessWidget {
                 builder: (BuildContext context) => page,
               ),
             ),
-        child: Padding(
+      child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Row(
           children: [
             Expanded(flex: 1, child: Image.asset('assets/icons/$image.png', height: 30)),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Expanded(
               flex: 7,
               child: Text(

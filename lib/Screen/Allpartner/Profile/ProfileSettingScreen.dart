@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/appController.dart';
+import 'DetailService/AddDetailServiceVenderPage.dart';
 import 'DetailService/DetailServiceVenderPage.dart';
 import 'VendorPage.dart';
 
@@ -140,12 +141,18 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           page: VendorPage(),
                         ),
                         Divider(color: Colors.grey),
-                        ProfileMenu(
-                          title: 'รายละเอียดบริการ',
-                          image: 'copyright',
-                          page: DetailServiceVenderPage(),
-                        ),
-                        Divider(color: Colors.grey),
+                        user.partner_detail?.id == null
+                            ? SizedBox.shrink()
+                            : Column(
+                                children: [
+                                  ProfileMenu(
+                                    title: 'รายละเอียดบริการ',
+                                    image: 'calendarIcon',
+                                    page: AddDetailServiceVenderPage(),
+                                  ),
+                                  Divider(color: Colors.grey),
+                                ],
+                              ),
                         ProfileMenu(
                           title: 'จัดการที่อยู่',
                           image: 'mapSetting',

@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'ServiceVender/venderServices.dart';
+
 part 'vendor.g.dart';
 
 @JsonSerializable()
@@ -18,6 +20,9 @@ class Vendor {
     this.fax,
     this.type,
     this.status,
+    this.scrap_services,
+    this.logistic_services,
+    this.purchase_services,
   });
 
   int? id;
@@ -33,6 +38,9 @@ class Vendor {
   String? fax;
   String? type;
   String? status;
+  List<VenderServices>? scrap_services;
+  List<VenderServices>? logistic_services;
+  List<VenderServices>? purchase_services;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => _$VendorFromJson(json);
 
