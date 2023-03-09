@@ -1,4 +1,3 @@
-
 import 'package:allpartner/Screen/Login/LoginScreen.dart';
 import 'package:allpartner/Screen/Register/RegisterScreen.dart';
 import 'package:allpartner/Screen/Widgets/ButtonRounded.dart';
@@ -22,7 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/screen1.png'),
+            image: AssetImage('assets/images/[960x1600]Partner.jpg'),
             fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
@@ -43,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               color: Colors.blue,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
               },
             ),
             SizedBox(height: 8),
@@ -52,7 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               color: Color.fromARGB(255, 247, 244, 244),
               textColor: Colors.blue,
               onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()));
               },
             ),
           ],

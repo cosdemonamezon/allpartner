@@ -99,6 +99,8 @@ class _DetailPurchasePage2State extends State<DetailPurchasePage2> {
                                                           company: controller.puchaseCompany[0].name,
                                                           image: controller.puchaseCompany[0].image,
                                                           images: controller.puchaseCompany[0].puchases![index].images,
+                                                          services:
+                                                              controller.puchaseCompany[0].puchases![index].services,
                                                           end: controller
                                                               .puchaseCompany[0].puchases![index].expire_hour!,
                                                           start:

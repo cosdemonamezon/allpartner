@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/images/ALLZERVE.png',
+                          'assets/images/Screenshot 2566-03-09 at 16.02.39.png',
                           height: 200,
                           width: 250,
                         ),

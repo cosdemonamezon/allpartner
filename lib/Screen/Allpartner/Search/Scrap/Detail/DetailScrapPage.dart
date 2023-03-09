@@ -7,6 +7,7 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../Model/ServiceVender/venderServices.dart';
 import '../../Quotation/QuotationPage.dart';
 
 class DetailScrapPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class DetailScrapPage extends StatefulWidget {
       this.image,
       this.id,
       this.images,
+      this.services,
       required this.start,
       required this.end});
   String? name;
@@ -28,6 +30,7 @@ class DetailScrapPage extends StatefulWidget {
   String? image;
   int? id;
   List<ImagesScrap>? images;
+  List<VenderServices>? services;
   final DateTime start;
   final String end;
 
@@ -218,12 +221,21 @@ class _DetailScrapPageState extends State<DetailScrapPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
-                      // Text(
-                      //   'น้ำหนัก: ${widget.weight!}',
-                      //   style: TextStyle(
-                      //     fontSize: 18,
-                      //   ),
-                      // ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: widget.services!.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return widget.services?[i].service?.name != null
+                              ? Text(
+                                  '- ${widget.services![i].service!.name!} ',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                )
+                              : SizedBox.shrink();
+                        },
+                      ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),

@@ -21,6 +21,9 @@ Scraps _$ScrapsFromJson(Map<String, dynamic> json) => Scraps(
       images: (json['images'] as List<dynamic>?)
           ?.map((e) => ImagesScrap.fromJson(e as Map<String, dynamic>))
           .toList(),
+      services: (json['services'] as List<dynamic>?)
+          ?.map((e) => VenderServices.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ScrapsToJson(Scraps instance) => <String, dynamic>{
@@ -34,4 +37,5 @@ Map<String, dynamic> _$ScrapsToJson(Scraps instance) => <String, dynamic>{
       'created_at': instance.created_at?.toIso8601String(),
       'No': instance.No,
       'images': instance.images,
+      'services': instance.services,
     };

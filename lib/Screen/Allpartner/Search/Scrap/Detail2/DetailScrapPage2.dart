@@ -100,6 +100,7 @@ class _DetailScrapPage2State extends State<DetailScrapPage2> {
                                                           company: controller.scrapCompany[0].name,
                                                           image: controller.scrapCompany[0].image,
                                                           images: controller.scrapCompany[0].scraps![index].images,
+                                                          services: controller.scrapCompany[0].scraps![index].services,
                                                           start: controller.scrapCompany[0].scraps![index].created_at!,
                                                           end: controller.scrapCompany[0].scraps![index].expire_hour!,
                                                         )));

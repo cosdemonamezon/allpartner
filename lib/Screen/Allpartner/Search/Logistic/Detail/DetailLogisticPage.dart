@@ -6,6 +6,8 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../Model/ServiceVender/venderServices.dart';
+
 class DetailLogisticPage extends StatefulWidget {
   DetailLogisticPage({
     super.key,
@@ -22,6 +24,7 @@ class DetailLogisticPage extends StatefulWidget {
     required this.start,
     required this.end,
     this.images,
+    this.services,
   });
   String? name;
   String? width;
@@ -36,6 +39,7 @@ class DetailLogisticPage extends StatefulWidget {
   final DateTime start;
   final String end;
   List<ImagesLogistic>? images;
+  List<VenderServices>? services;
 
   @override
   State<DetailLogisticPage> createState() => _DetailLogisticPageState();
@@ -248,6 +252,21 @@ class _DetailLogisticPageState extends State<DetailLogisticPage> {
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: widget.services!.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return widget.services?[i].service?.name != null
+                              ? Text(
+                                  '- ${widget.services![i].service!.name!} ',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                )
+                              : SizedBox.shrink();
+                        },
                       ),
                     ],
                   ),

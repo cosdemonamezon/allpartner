@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:allpartner/extension/dateExtension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../Model/ServiceVender/venderServices.dart';
 import '../../../../../Model/imagesCpmpanie/imagesPurchase.dart';
 import '../../Quotation/QuotationPage.dart';
 
@@ -18,6 +21,7 @@ class DetailPurchasePage extends StatefulWidget {
     this.company,
     this.image,
     this.images,
+    this.services,
     required this.start,
     required this.end,
   });
@@ -28,6 +32,7 @@ class DetailPurchasePage extends StatefulWidget {
   String? company;
   String? image;
   List<ImagesPurchase>? images;
+  List<VenderServices>? services;
   final DateTime start;
   final String end;
 
@@ -45,6 +50,7 @@ class _DetailPurchasePageState extends State<DetailPurchasePage> {
     super.initState();
     controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
     print(widget.id);
+    inspect(widget.services);
   }
 
   void onEnd() {
@@ -217,12 +223,21 @@ class _DetailPurchasePageState extends State<DetailPurchasePage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
-                      // Text(
-                      //   'น้ำหนัก: ${widget.weight!}',
-                      //   style: TextStyle(
-                      //     fontSize: 18,
-                      //   ),
-                      // ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: widget.services!.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return widget.services?[i].service?.name != null
+                              ? Text(
+                                  '- ${widget.services![i].service!.name!} ',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                )
+                              : SizedBox.shrink();
+                        },
+                      ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),

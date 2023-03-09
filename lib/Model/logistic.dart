@@ -1,6 +1,8 @@
 import 'package:allpartner/Model/imagesCpmpanie/imagesLogistic.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'ServiceVender/venderServices.dart';
+
 part 'logistic.g.dart';
 
 @JsonSerializable()
@@ -26,6 +28,7 @@ class Logistic {
     this.expire_hour,
     this.created_at,
     this.images,
+    this.services,
   });
 
   int? id;
@@ -48,6 +51,7 @@ class Logistic {
   DateTime? created_at;
   int? No;
   List<ImagesLogistic>? images;
+  List<VenderServices>? services;
 
   factory Logistic.fromJson(Map<String, dynamic> json) => _$LogisticFromJson(json);
 

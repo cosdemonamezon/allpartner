@@ -113,6 +113,8 @@ class _DetailLogsiticPage2State extends State<DetailLogsiticPage2> {
                                                               .logisticCompany[0].logistics![index].created_at!,
                                                           images:
                                                               controller.logisticCompany[0].logistics![index].images,
+                                                          services:
+                                                              controller.logisticCompany[0].logistics![index].services,
                                                         )));
                                           },
                                           child: Container(

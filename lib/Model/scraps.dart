@@ -1,6 +1,8 @@
 import 'package:allpartner/Model/imagesCpmpanie/imagesScrap.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'ServiceVender/venderServices.dart';
+
 part 'scraps.g.dart';
 
 @JsonSerializable()
@@ -16,6 +18,7 @@ class Scraps {
     this.created_at,
     this.No,
     this.images,
+    this.services,
   });
 
   int? id;
@@ -28,6 +31,7 @@ class Scraps {
   DateTime? created_at;
   int? No;
   List<ImagesScrap>? images;
+  List<VenderServices>? services;
 
   factory Scraps.fromJson(Map<String, dynamic> json) => _$ScrapsFromJson(json);
 
